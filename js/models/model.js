@@ -17,6 +17,7 @@ class Model {
 		mat4.identity(this.rotatedMatrix);
 
 		this.angle = 0;
+		this.angletSet = 0;
 
         this.position = [0, 0];
         this.width = 1.5;
