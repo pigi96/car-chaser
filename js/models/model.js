@@ -120,13 +120,13 @@ class Model {
             case "up":
                 switch (rotation) {
                     case "left":
-                        matrix = mat4.fromTranslation(mat4.create(), [this.speed/2, 0.0, this.speed]);
+                        matrix = mat4.fromTranslation(mat4.create(), [this.speed/Math.sqrt(2), this.speed/Math.sqrt(2), 0.0]);
                         break;
                     case "right":
-                        matrix = mat4.fromTranslation(mat4.create(), [this.speed/2, 0.0, -this.speed]);
+                        matrix = mat4.fromTranslation(mat4.create(), [-this.speed/Math.sqrt(2), this.speed/Math.sqrt(2), 0.0]);
                         break;
                     case "stop":
-                        matrix = mat4.fromTranslation(mat4.create(), [this.speed, 0.0, 0.0]);
+                        matrix = mat4.fromTranslation(mat4.create(), [0.0, this.speed, 0.0]);
                         break;
                 }
                 mat4.multiply(this.posMatrix, this.posMatrix, matrix);
@@ -134,13 +134,13 @@ class Model {
             case "down":
                 switch (rotation) {
                     case "left":
-                        matrix = mat4.fromTranslation(mat4.create(), [-this.speed/2, 0.0, this.speed]);
+                        matrix = mat4.fromTranslation(mat4.create(), [this.speed/Math.sqrt(2), -this.speed/Math.sqrt(2), 0.0]);
                         break;
                     case "right":
-                        matrix = mat4.fromTranslation(mat4.create(), [-this.speed/2, 0.0, -this.speed]);
+                        matrix = mat4.fromTranslation(mat4.create(), [-this.speed/Math.sqrt(2), -this.speed/Math.sqrt(2), 0.0]);
                         break;
                     case "stop":
-                        matrix = mat4.fromTranslation(mat4.create(), [-this.speed, 0.0, 0.0]);
+                        matrix = mat4.fromTranslation(mat4.create(), [0.0, -this.speed, 0.0]);
                         break;
                 }
                 mat4.multiply(this.posMatrix, this.posMatrix, matrix);
@@ -148,11 +148,11 @@ class Model {
             case "stop":
                 switch (rotation) {
                     case "left":
-                        matrix = mat4.fromTranslation(mat4.create(), [0.0, 0.0, this.speed]);
+                        matrix = mat4.fromTranslation(mat4.create(), [this.speed, 0.0, 0.0]);
                         mat4.multiply(this.posMatrix, this.posMatrix, matrix);
                         break;
                     case "right":
-                        matrix = mat4.fromTranslation(mat4.create(), [0.0, 0.0, -this.speed]);
+                        matrix = mat4.fromTranslation(mat4.create(), [-this.speed, 0.0, 0.0]);
                         mat4.multiply(this.posMatrix, this.posMatrix, matrix);
                         break;
                 }

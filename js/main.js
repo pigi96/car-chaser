@@ -23,16 +23,13 @@ function update() {
 	const gl = webgl.gl;
 	gl.useProgram(webgl.program);
 
-    let matWorldUniformLocation = gl.getUniformLocation(webgl.program, 'mWorld');
-    let matViewUniformLocation = gl.getUniformLocation(webgl.program, 'mView');
-    let matProjUniformLocation = gl.getUniformLocation(webgl.program, 'mProj');
 
     let worldMatrix = new Float32Array(16);
     let viewMatrix = new Float32Array(16);
     let projMatrix = new Float32Array(16);
     mat4.identity(worldMatrix);
-	mat4.lookAt(viewMatrix, [1, input.zoom, 0], [0, 0, 0], [0, 1, 0]);
-	mat4.perspective(projMatrix, glMatrix.toRadian(90), webgl.width / webgl.height, 0.1, 1000.0);
+	mat4.lookAt(viewMatrix, [0, 0, 2*input.zoom], [0, 0, 0], [0, 1, 0]);
+	mat4.perspective(projMatrix, glMatrix.toRadian(60), webgl.width / webgl.height, 0.1, 1000.0);
 
     let identityMatrix = new Float32Array(16);
 	mat4.identity(identityMatrix);
