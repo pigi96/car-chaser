@@ -27,10 +27,8 @@ class Enemy extends Model {
 	    //console.log(angle);
 	    if (angle >= 0) {
 	        this.angle = angle * (4 / Math.PI);
-	        console.log(this.angle);
         } else {
 	        this.angle = 4 + (4 + angle * (4 / Math.PI));
-	        console.log(this.angle);
         }
 
         let matrix = mat4.fromTranslation(mat4.create(), [0.1*dir[0], 0.1*dir[1], 0.0]);
