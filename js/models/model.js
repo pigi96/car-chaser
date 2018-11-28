@@ -12,13 +12,16 @@ class Model {
 		this.modelTexCoords = null;
 
 		this.posMatrix = new Float32Array(16);
+		this.rotatedMatrix = new Float32Array(16);
 		mat4.identity(this.posMatrix);
+		mat4.identity(this.rotatedMatrix);
 
 		this.way = "stop";
 		this.rotat = "stop";
         this.speed = 0.2;
         this.turnSpeed = 0.003;
         this.look = "up";
+        this.angle = 0;
 		this.pointingTo = [this.speed, 0.0, 0.0];
 	}
 
@@ -109,9 +112,17 @@ class Model {
 
 		gl.bindTexture(gl.TEXTURE_2D, this.texture);
 		gl.activeTexture(gl.TEXTURE0);
-		webgl.translate(this.posMatrix, viewMatrix, projMatrix)
+
+        this.rotateObject();
+		webgl.translate(this.rotatedMatrix, viewMatrix, projMatrix);
+
 		gl.drawElements(gl.TRIANGLES, this.modelIndices.length, gl.UNSIGNED_SHORT, 0);
 	}
+
+	rotateObject() {
+        let angle = this.angle / 4 * Math.PI;
+        mat4.rotate(this.rotatedMatrix, this.posMatrix, angle, [0, 0, 1]);
+    }
 
 	move(direction, rotation) {
 	    let matrix = null;
@@ -120,12 +131,15 @@ class Model {
             case "up":
                 switch (rotation) {
                     case "left":
+                        this.angle = 3;
                         matrix = mat4.fromTranslation(mat4.create(), [this.speed/Math.sqrt(2), this.speed/Math.sqrt(2), 0.0]);
                         break;
                     case "right":
+                        this.angle = 5;
                         matrix = mat4.fromTranslation(mat4.create(), [-this.speed/Math.sqrt(2), this.speed/Math.sqrt(2), 0.0]);
                         break;
                     case "stop":
+                        this.angle = 4;
                         matrix = mat4.fromTranslation(mat4.create(), [0.0, this.speed, 0.0]);
                         break;
                 }
@@ -134,12 +148,15 @@ class Model {
             case "down":
                 switch (rotation) {
                     case "left":
+                        this.angle = 1;
                         matrix = mat4.fromTranslation(mat4.create(), [this.speed/Math.sqrt(2), -this.speed/Math.sqrt(2), 0.0]);
                         break;
                     case "right":
+                        this.angle = 7;
                         matrix = mat4.fromTranslation(mat4.create(), [-this.speed/Math.sqrt(2), -this.speed/Math.sqrt(2), 0.0]);
                         break;
                     case "stop":
+                        this.angle = 0;
                         matrix = mat4.fromTranslation(mat4.create(), [0.0, -this.speed, 0.0]);
                         break;
                 }
@@ -148,10 +165,12 @@ class Model {
             case "stop":
                 switch (rotation) {
                     case "left":
+                        this.angle = 2;
                         matrix = mat4.fromTranslation(mat4.create(), [this.speed, 0.0, 0.0]);
                         mat4.multiply(this.posMatrix, this.posMatrix, matrix);
                         break;
                     case "right":
+                        this.angle = 6;
                         matrix = mat4.fromTranslation(mat4.create(), [-this.speed, 0.0, 0.0]);
                         mat4.multiply(this.posMatrix, this.posMatrix, matrix);
                         break;
