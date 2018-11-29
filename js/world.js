@@ -6,11 +6,11 @@ class World {
 		this.enemy = [];
 		this.enemy.position = [0, 0];
 
-        this.obstacles[0] = new Obstacle([5, 0, 0]);
-        this.obstacles[1] = new Obstacle([-5, 0, 0]);
+        //this.obstacles[0] = new Obstacle([5, 0, 0]);
+        //this.obstacles[1] = new Obstacle([-5, 0, 0]);
 
-        this.enemies[0] = new Enemy([8, -13, 0]);
-        this.enemies[1] = new Enemy([-9, 13, 0]);
+        this.enemies[0] = new Enemy([2*80, -130*2, 0]);
+        this.enemies[1] = new Enemy([-90*2, 130*2, 0]);
 	}
 
 	initialize() {
@@ -27,7 +27,7 @@ class World {
         this.enemies.forEach(o => o.draw(viewMatrix, projMatrix));
         //console.log(this.player.collision(this.player, this.enemy));
 
-        this.obstacles.forEach(o => o.draw(viewMatrix, projMatrix));
+        //this.obstacles.forEach(o => o.draw(viewMatrix, projMatrix));
     }
 
     update() {

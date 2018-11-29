@@ -28,7 +28,7 @@ function update() {
     let viewMatrix = new Float32Array(16);
     let projMatrix = new Float32Array(16);
     mat4.identity(worldMatrix);
-	mat4.lookAt(viewMatrix, [0, 0, 2*input.zoom], [0, 0, 0], [0, 1, 0]);
+	mat4.lookAt(viewMatrix, [0, 0, 40*input.zoom], [0, 0, 0], [0, 1, 0]);
 	mat4.perspective(projMatrix, glMatrix.toRadian(60), webgl.width / webgl.height, 0.1, 1000.0);
 
     let identityMatrix = new Float32Array(16);

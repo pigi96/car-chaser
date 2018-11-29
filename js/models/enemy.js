@@ -4,8 +4,21 @@ class Enemy extends Model {
 	constructor(pos) {
         super();
 
-        this.createBuffers(modelObj);
-        this.createTextures(img);
+        let random = Math.floor(Math.random() * 3);
+        switch (random) {
+            case 0:
+                this.createBuffers(carObj, 2);
+                this.createTextures(car8);
+                break;
+            case 1:
+                this.createBuffers(carObj, 3);
+                this.createTextures(car1);
+                break;
+            case 2:
+                this.createBuffers(carObj, 0);
+                this.createTextures(car11);
+                break;
+        }
 
         let matrix = mat4.fromTranslation(mat4.create(), pos);
         mat4.multiply(this.posMatrix, this.posMatrix, matrix);
@@ -31,7 +44,7 @@ class Enemy extends Model {
 	        this.angle = 4 + (4 + angle * (4 / Math.PI));
         }
 
-        let matrix = mat4.fromTranslation(mat4.create(), [0.1*dir[0], 0.1*dir[1], 0.0]);
+        let matrix = mat4.fromTranslation(mat4.create(), [1*dir[0], 1*dir[1], 0.0]);
         mat4.multiply(this.posMatrix, this.posMatrix, matrix);
         this.position[0] = this.posMatrix[12];
         this.position[1] = this.posMatrix[13];

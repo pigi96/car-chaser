@@ -24,6 +24,11 @@ class Model {
         this.height = 1.5;
 	}
 
+    rotateModelCorrectlyCauseWeDontKnowHowToUseBlender() {
+        mat4.rotate(this.rotatedMatrix, this.rotatedMatrix, Math.PI, [0, 1, 1]);
+        mat4.rotate(this.rotatedMatrix, this.rotatedMatrix, Math.PI, [0, 0, 1]);
+    }
+
 	collision(model1, model2) {
         if (Math.abs(model1.position[0] - model2.position[0]) <= this.width) {
             if (Math.abs(model1.position[1] - model2.position[1]) <= this.height) {
@@ -33,13 +38,13 @@ class Model {
         return false;
     }
 
-	createBuffers(modelObj) {
+	createBuffers(modelObj, meshPos) {
 		const gl = webgl.gl;
 		gl.useProgram(webgl.program);
 
-		let modelVertices = modelObj.meshes[0].vertices;
-        let modelIndices = [].concat.apply([], modelObj.meshes[0].faces);
-        let modelColors = modelObj.meshes[0].texturecoords[0];
+		let modelVertices = modelObj.meshes[meshPos].vertices;
+        let modelIndices = [].concat.apply([], modelObj.meshes[meshPos].faces);
+        let modelColors = modelObj.meshes[meshPos].texturecoords[0];
 
 		this.modelVertices = modelVertices;
 		this.modelIndices = modelIndices;
@@ -105,22 +110,40 @@ class Model {
 		gl.bindTexture(gl.TEXTURE_2D, null);
 
 		this.texture = texture;
-		console.log(this.texture);
 	}
 
 	draw(viewMatrix, projMatrix) {
 		const gl = webgl.gl;
 		gl.useProgram(webgl.program);
 
-		gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexPositionBuffer);
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.modelVertices), gl.STATIC_DRAW);
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexPositionBuffer);
+        let positionAttribLocation = gl.getAttribLocation(webgl.program, 'aVertexPosition');
+        gl.vertexAttribPointer(
+            positionAttribLocation, // Attribute location
+            3, // Number of elements per attribute
+            gl.FLOAT, // Type of elements
+            gl.FALSE,
+            3 * Float32Array.BYTES_PER_ELEMENT, // Size of an individual vertex
+            0 // Offset from the beginning of a single vertex to this attribute
+        );
+        gl.enableVertexAttribArray(positionAttribLocation);
 
-		gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexColorBuffer);
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.modelColors), gl.STATIC_DRAW);
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexColorBuffer);
+        let colorAttribLocation = gl.getAttribLocation(webgl.program, 'aVertexColor');
+        gl.vertexAttribPointer(
+            colorAttribLocation, // Attribute location
+            2, // Number of elements per attribute
+            gl.FLOAT, // Type of elements
+            gl.FALSE,
+            2 * Float32Array.BYTES_PER_ELEMENT, // Size of an individual vertex
+            0
+        );
+        gl.enableVertexAttribArray(colorAttribLocation);
+
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.vertexIndexBuffer);
 
 		gl.bindTexture(gl.TEXTURE_2D, this.texture);
 		gl.activeTexture(gl.TEXTURE0);
-
         this.rotateObject();
 		webgl.translate(this.rotatedMatrix, viewMatrix, projMatrix);
 
@@ -130,6 +153,7 @@ class Model {
 	rotateObject() {
         let angle = this.angle / 4 * Math.PI;
         mat4.rotate(this.rotatedMatrix, this.posMatrix, angle, [0, 0, 1]);
+        this.rotateModelCorrectlyCauseWeDontKnowHowToUseBlender();
     }
 
     direction(direction) {

@@ -4,12 +4,12 @@ class Player extends Model {
 	constructor() {
 		super();
 
-		this.createBuffers(modelObj);
-		this.createTextures(img);
+		this.createBuffers(carObj, 3);
+		this.createTextures(car2);
 
         this.way = "stop";
         this.rotat = "stop";
-        this.speed = 0.2;
+        this.speed = 5;
         this.turnSpeed = 0.003;
         this.look = "up";
         this.angle = 0;
