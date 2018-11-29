@@ -43,7 +43,6 @@ class Input {
                 break;
         }
     }
-
     handleKeyUp(event) {
         switch (event.key.toLowerCase()) {
             case "w":
@@ -60,7 +59,7 @@ class Input {
                 break;
         }
     }
-
+    /*
     handleKeyPress(event) {
         switch (event.key.toLowerCase()) {
             case "z":
@@ -88,5 +87,6 @@ class Input {
                 world.player.move("right");
                 break;
         }
-    }
+    }*/
+
 }

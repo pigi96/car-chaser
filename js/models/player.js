@@ -6,10 +6,10 @@ class Player extends Model {
 
 		this.createBuffers(carObj, 3);
 		this.createTextures(car2);
-
+        
         this.way = "stop";
         this.rotat = "stop";
-        this.speed = 0.1;
+        this.speed = 0.2;
         this.turnSpeed = 0.003;
         this.look = "up";
         this.angle = 0;
@@ -21,6 +21,7 @@ class Player extends Model {
         //this.rotate(rotation);
         switch (direction) {
             case "up":
+                if(world.HandlePlayerFatalCollisions()){
                 switch (rotation) {
                     case "left":
                         this.angle = 3;
@@ -36,8 +37,12 @@ class Player extends Model {
                         break;
                 }
                 mat4.multiply(this.posMatrix, this.posMatrix, matrix);
+                }else{
+                    window.location.reload();
+                }
                 break;
             case "down":
+                 if(world.HandlePlayerFatalCollisions()){
                 switch (rotation) {
                     case "left":
                         this.angle = 1;
@@ -53,18 +58,29 @@ class Player extends Model {
                         break;
                 }
                 mat4.multiply(this.posMatrix, this.posMatrix, matrix);
+                 }else{
+                    window.location.reload();
+                }
                 break;
             case "stop":
                 switch (rotation) {
                     case "left":
+                        if(world.HandlePlayerFatalCollisions()){
                         this.angle = 2;
                         matrix = mat4.fromTranslation(mat4.create(), [this.speed, 0.0, 0.0]);
                         mat4.multiply(this.posMatrix, this.posMatrix, matrix);
+                        }else{
+                            window.location.reload();
+                        }
                         break;
                     case "right":
+                        if(world.HandlePlayerFatalCollisions()){
                         this.angle = 6;
                         matrix = mat4.fromTranslation(mat4.create(), [-this.speed, 0.0, 0.0]);
                         mat4.multiply(this.posMatrix, this.posMatrix, matrix);
+                        }else{
+                        window.location.reload();
+                        }
                         break;
                 }
                 break;
@@ -72,6 +88,7 @@ class Player extends Model {
         this.position[0] = this.posMatrix[12];
         this.position[1] = this.posMatrix[13];
         this.camera();
+        
     }
 
     camera() {

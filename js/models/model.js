@@ -10,7 +10,6 @@ class Model {
 		this.modelVertices = null;
 		this.modelIndices = null;
 		this.modelTexCoords = null;
-
 		this.posMatrix = new Float32Array(16);
 		this.rotatedMatrix = new Float32Array(16);
 		mat4.identity(this.posMatrix);
@@ -22,6 +21,7 @@ class Model {
         this.position = [0, 0];
         this.width = 1.5;
         this.height = 1.5;
+        this.hp = 100;
 	}
 
     rotateModelCorrectlyCauseWeDontKnowHowToUseBlender() {
@@ -49,7 +49,7 @@ class Model {
 		this.modelVertices = modelVertices;
 		this.modelIndices = modelIndices;
 		this.modelColors = modelColors;
-		console.log(meshPos, modelVertices);
+		//console.log(meshPos, modelVertices);
 
 		const vertexPositionBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);

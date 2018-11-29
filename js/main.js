@@ -4,16 +4,17 @@ function main() {
 	normalize(carObj.meshes);
     load();
 }
-
 let input;
 let world;
+
 function load() {
 	webgl.initialize(vsText, fsText);
 
 	world = new World();
-
+    
 	input = new Input();
-
+	setInterval(world.HandleNonFatalCollisions,500);
+	
 	requestAnimationFrame(update);
 }
 
@@ -42,15 +43,15 @@ function update() {
 
 	gl.clearColor(0.75, 0.85, 0.8, 1.0);
 	gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
-
+	
 	world.draw(viewMatrix, projMatrix);
-
+	
 	deltaTime = performance.now() - frameStart;
 	requestAnimationFrame(update);
 }
 
 function normalize(mashes){
-		console.log("začetek normalizacije");
+		console.log("normalize obj");
     	for(var i=0 ;i<mashes.length; i++){
     		let max = Math.max(...mashes[i].vertices); 
     		let min = Math.min(...mashes[i].vertices); 
@@ -62,6 +63,6 @@ function normalize(mashes){
     			mashes[i].vertices[j]=rng*(mashes[i].vertices[j]-min)/(max-min) - rng/2;
     		}
 
-            console.log(mashes[i].vertices);
+           // console.log(mashes[i].vertices);
     	}
     }
