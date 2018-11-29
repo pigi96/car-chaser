@@ -1,8 +1,7 @@
 "use strict"
 
 function main() {
-	
-	normalize(modelObj.meshes);
+	normalize(carObj.meshes);
     load();
 }
 
@@ -32,7 +31,7 @@ function update() {
 
     mat4.perspective(projMatrix, glMatrix.toRadian(90), webgl.width / webgl.height, 0.1, 1000.0);
 
-	mat4.lookAt(viewMatrix, [0, 0, 30*input.zoom], [0, 0, 0], [0, 1, 0]);
+	mat4.lookAt(viewMatrix, [0, 0, 4*input.zoom], [0, 0, 0], [0, 1, 0]);
     //mat4.fromRotation(viewMatrix, glMatrix.toRadian(40), [1.0, 0.0, 0.0]);
     mat4.translate(viewMatrix, viewMatrix, [-world.player.position[0], -world.player.position[1], -50.0]);
     //mat4.multiply(projMatrix, projMatrix, viewMatrix);
@@ -52,15 +51,17 @@ function update() {
 
 function normalize(mashes){
 		console.log("začetek normalizacije");
-    	for(var i=1;i<mashes.length;i++){
+    	for(var i=0 ;i<mashes.length; i++){
     		let max = Math.max(...mashes[i].vertices); 
     		let min = Math.min(...mashes[i].vertices); 
-    		let rng = 2;
+    		let rng = 4;
     		if(i== 1 || i == 2 || i == 3){
-    			rng = 4;
+    			rng = 2;
     		}
     		for(var j=0;j<mashes[i].vertices.length;j++){
     			mashes[i].vertices[j]=rng*(mashes[i].vertices[j]-min)/(max-min) - rng/2;
     		}
+
+            console.log(mashes[i].vertices);
     	}
     }

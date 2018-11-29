@@ -9,8 +9,8 @@ class World {
         //this.obstacles[0] = new Obstacle([5, 0, 0]);
         //this.obstacles[1] = new Obstacle([-5, 0, 0]);
 
-        this.enemies[0] = new Enemy([2*80, -130*2, 0]);
-        this.enemies[1] = new Enemy([-90*2, 130*2, 0]);
+        this.enemies[0] = new Enemy([5, -5, 0]);
+        this.enemies[1] = new Enemy([-5, 5, 0]);
 	}
 
 	initialize() {

@@ -49,6 +49,7 @@ class Model {
 		this.modelVertices = modelVertices;
 		this.modelIndices = modelIndices;
 		this.modelColors = modelColors;
+		console.log(meshPos, modelVertices);
 
 		const vertexPositionBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);

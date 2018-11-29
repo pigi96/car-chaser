@@ -44,7 +44,7 @@ class Enemy extends Model {
 	        this.angle = 4 + (4 + angle * (4 / Math.PI));
         }
 
-        let matrix = mat4.fromTranslation(mat4.create(), [1*dir[0], 1*dir[1], 0.0]);
+        let matrix = mat4.fromTranslation(mat4.create(), [0.05*dir[0], 0.05*dir[1], 0.0]);
         mat4.multiply(this.posMatrix, this.posMatrix, matrix);
         this.position[0] = this.posMatrix[12];
         this.position[1] = this.posMatrix[13];

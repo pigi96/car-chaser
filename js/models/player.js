@@ -9,7 +9,7 @@ class Player extends Model {
 
         this.way = "stop";
         this.rotat = "stop";
-        this.speed = 5;
+        this.speed = 0.1;
         this.turnSpeed = 0.003;
         this.look = "up";
         this.angle = 0;
