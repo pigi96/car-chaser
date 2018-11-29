@@ -71,6 +71,7 @@ class Player extends Model {
         }
         this.position[0] = this.posMatrix[12];
         this.position[1] = this.posMatrix[13];
+        this.camera();
     }
 
     camera() {

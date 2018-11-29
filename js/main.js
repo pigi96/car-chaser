@@ -24,12 +24,16 @@ function update() {
 	gl.useProgram(webgl.program);
 
 
-    let worldMatrix = new Float32Array(16);
     let viewMatrix = new Float32Array(16);
     let projMatrix = new Float32Array(16);
-    mat4.identity(worldMatrix);
-	mat4.lookAt(viewMatrix, [0, 0, 40*input.zoom], [0, 0, 0], [0, 1, 0]);
-	mat4.perspective(projMatrix, glMatrix.toRadian(60), webgl.width / webgl.height, 0.1, 1000.0);
+
+
+    mat4.perspective(projMatrix, glMatrix.toRadian(90), webgl.width / webgl.height, 0.1, 1000.0);
+
+	mat4.lookAt(viewMatrix, [0, 0, 30*input.zoom], [0, 0, 0], [0, 1, 0]);
+    //mat4.fromRotation(viewMatrix, glMatrix.toRadian(40), [1.0, 0.0, 0.0]);
+    mat4.translate(viewMatrix, viewMatrix, [-world.player.position[0], -world.player.position[1], -50.0]);
+    //mat4.multiply(projMatrix, projMatrix, viewMatrix);
 
     let identityMatrix = new Float32Array(16);
 	mat4.identity(identityMatrix);
