@@ -1,6 +1,8 @@
 "use strict"
 
 function main() {
+	
+	normalize(modelObj.meshes);
     load();
 }
 
@@ -47,3 +49,18 @@ function update() {
 	deltaTime = performance.now() - frameStart;
 	requestAnimationFrame(update);
 }
+
+function normalize(mashes){
+		console.log("začetek normalizacije");
+    	for(var i=1;i<mashes.length;i++){
+    		let max = Math.max(...mashes[i].vertices); 
+    		let min = Math.min(...mashes[i].vertices); 
+    		let rng = 2;
+    		if(i== 1 || i == 2 || i == 3){
+    			rng = 4;
+    		}
+    		for(var j=0;j<mashes[i].vertices.length;j++){
+    			mashes[i].vertices[j]=rng*(mashes[i].vertices[j]-min)/(max-min) - rng/2;
+    		}
+    	}
+    }
