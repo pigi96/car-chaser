@@ -3,6 +3,9 @@
 class WebGL {
 	initialize(vsText, fsText) {
 		this.canvas = document.getElementById("glCanvas");
+		//this.ctx = this.canvas.getContext("2d");
+        //this.ctx.font = "30px Arial";
+        //this.ctx.strokeText("Hello World",10,50);
 
 		const { glCan, width, height } = this.getWebGLContext();
 		this.gl = glCan;

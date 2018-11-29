@@ -10,7 +10,6 @@ class Model {
 		this.modelVertices = null;
 		this.modelIndices = null;
 		this.modelTexCoords = null;
-
 		this.posMatrix = new Float32Array(16);
 		this.rotatedMatrix = new Float32Array(16);
 		mat4.identity(this.posMatrix);
@@ -20,11 +19,15 @@ class Model {
 		this.angletSet = 0;
 
         this.position = [0, 0];
-        this.width = 1.5;
-        this.height = 1.5;
+        this.width = 1.5; // default
+        this.height = 1.5; // default
+        this.hp = 100;
 	}
 
-	rotateObject() {}
+    rotateModelCorrectlyCauseWeDontKnowHowToUseBlender() {
+        mat4.rotate(this.rotatedMatrix, this.rotatedMatrix, Math.PI, [0, 1, 1]);
+        mat4.rotate(this.rotatedMatrix, this.rotatedMatrix, Math.PI, [0, 0, 1]);
+    }
 
 	collision(model1, model2) {
         if (Math.abs(model1.position[0] - model2.position[0]) <= this.width) {
@@ -46,6 +49,7 @@ class Model {
 		this.modelVertices = modelVertices;
 		this.modelIndices = modelIndices;
 		this.modelColors = modelColors;
+		//console.log(meshPos, modelVertices);
 
 		const vertexPositionBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
@@ -146,6 +150,8 @@ class Model {
 
 		gl.drawElements(gl.TRIANGLES, this.modelIndices.length, gl.UNSIGNED_SHORT, 0);
 	}
+
+	rotateObject() {}
 
     direction(direction) {
 	    this.way = direction;
