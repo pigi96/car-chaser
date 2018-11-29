@@ -24,10 +24,7 @@ class Model {
         this.height = 1.5;
 	}
 
-    rotateModelCorrectlyCauseWeDontKnowHowToUseBlender() {
-        mat4.rotate(this.rotatedMatrix, this.rotatedMatrix, Math.PI, [0, 1, 1]);
-        mat4.rotate(this.rotatedMatrix, this.rotatedMatrix, Math.PI, [0, 0, 1]);
-    }
+	rotateObject() {}
 
 	collision(model1, model2) {
         if (Math.abs(model1.position[0] - model2.position[0]) <= this.width) {
@@ -49,7 +46,6 @@ class Model {
 		this.modelVertices = modelVertices;
 		this.modelIndices = modelIndices;
 		this.modelColors = modelColors;
-		console.log(meshPos, modelVertices);
 
 		const vertexPositionBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
@@ -150,12 +146,6 @@ class Model {
 
 		gl.drawElements(gl.TRIANGLES, this.modelIndices.length, gl.UNSIGNED_SHORT, 0);
 	}
-
-	rotateObject() {
-        let angle = this.angle / 4 * Math.PI;
-        mat4.rotate(this.rotatedMatrix, this.posMatrix, angle, [0, 0, 1]);
-        this.rotateModelCorrectlyCauseWeDontKnowHowToUseBlender();
-    }
 
     direction(direction) {
 	    this.way = direction;

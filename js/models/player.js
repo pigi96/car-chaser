@@ -16,6 +16,17 @@ class Player extends Model {
         this.pointingTo = [this.speed, 0.0, 0.0];
 	}
 
+    rotateModelCorrectlyCauseWeDontKnowHowToUseBlender() {
+        mat4.rotate(this.rotatedMatrix, this.rotatedMatrix, Math.PI, [0, 1, 1]);
+        mat4.rotate(this.rotatedMatrix, this.rotatedMatrix, Math.PI, [0, 0, 1]);
+    }
+
+    rotateObject() {
+        let angle = this.angle / 4 * Math.PI;
+        mat4.rotate(this.rotatedMatrix, this.posMatrix, angle, [0, 0, 1]);
+        this.rotateModelCorrectlyCauseWeDontKnowHowToUseBlender();
+    }
+
     move(direction, rotation) {
         let matrix = null;
         //this.rotate(rotation);

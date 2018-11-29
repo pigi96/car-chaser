@@ -54,7 +54,21 @@ function loadAssets() {
                                                                                             alert("Fatal error");
                                                                                             console.error(imgErr);
                                                                                         } else {
-                                                                                            assetsLoaded(vsText, fsText, carObj, car1, car2, car4, car6, car8, car10, car11, car12);
+                                                                                            loadJSONResource("../../assets/grassObj.json", function(modelErr, grassObj) {
+                                                                                                if (modelErr) {
+                                                                                                    alert("Fatal error");
+                                                                                                    console.error(modelErr);
+                                                                                                } else {
+                                                                                                    loadImage("../../assets/grass.jpg", function(imgErr, grass) {
+                                                                                                        if (imgErr) {
+                                                                                                            alert("Fatal error");
+                                                                                                            console.error(imgErr);
+                                                                                                        } else {
+                                                                                                            assetsLoaded(vsText, fsText, carObj, car1, car2, car4, car6, car8, car10, car11, car12, grassObj, grass);
+                                                                                                        }
+                                                                                                    })
+                                                                                                }
+                                                                                            })
                                                                                         }
                                                                                     })
                                                                                 }
@@ -78,8 +92,8 @@ function loadAssets() {
         }
     })
 }
-let vsText, fsText, carObj, car1, car2, car4, car6, car8, car10, car11, car12;
-function assetsLoaded(vsText1, fsText1, carObja, car1a, car2a, car4a, car6a, car8a, car10a, car11a, car12a) {
+let vsText, fsText, carObj, car1, car2, car4, car6, car8, car10, car11, car12, grassObj, grass;
+function assetsLoaded(vsText1, fsText1, carObja, car1a, car2a, car4a, car6a, car8a, car10a, car11a, car12a, grassObja, grassa) {
     vsText = vsText1;
     fsText = fsText1;
     carObj = carObja;
@@ -91,6 +105,8 @@ function assetsLoaded(vsText1, fsText1, carObja, car1a, car2a, car4a, car6a, car
     car10 = car10a;
     car11 = car11a;
     car12 = car12a;
+    grassObj = grassObja;
+    grass = grassa;
 
     main();
 }

@@ -24,6 +24,17 @@ class Enemy extends Model {
         mat4.multiply(this.posMatrix, this.posMatrix, matrix);
 	}
 
+    rotateModelCorrectlyCauseWeDontKnowHowToUseBlender() {
+        mat4.rotate(this.rotatedMatrix, this.rotatedMatrix, Math.PI, [0, 1, 1]);
+        mat4.rotate(this.rotatedMatrix, this.rotatedMatrix, Math.PI, [0, 0, 1]);
+    }
+
+    rotateObject() {
+        let angle = this.angle / 4 * Math.PI;
+        mat4.rotate(this.rotatedMatrix, this.posMatrix, angle, [0, 0, 1]);
+        this.rotateModelCorrectlyCauseWeDontKnowHowToUseBlender();
+    }
+
 	attackPlayer(player) {
 	    let dir = [0, 0];
 	    dir[0] = player.position[0] - this.position[0];

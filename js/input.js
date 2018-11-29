@@ -4,7 +4,7 @@ class Input {
     constructor() {
         this.zoom = -15;
         this.zoom_max = -30;
-        this.zoom_min = -15;
+        this.zoom_min = -5;
 
         this.keyboard();
     }
