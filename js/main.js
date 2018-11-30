@@ -3,6 +3,10 @@
 function main() {
 	normalize(carObj.meshes, 0);
 	normalize(grassObj.meshes, 15);
+	normalize(house1Obj.meshes, 6);
+	normalize(roadForwardObj.meshes, 6);
+    normalize(roadCrossObj.meshes, 15);
+    normalize(road90Obj.meshes, 16);
     load();
 }
 let input;

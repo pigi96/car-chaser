@@ -8,11 +8,13 @@ class World {
         this.obstacles[0] = new Obstacle([5, 0, 0]);
         this.obstacles[1] = new Obstacle([-5, 0, 0]);
 
-        this.enemies[0] = new Enemy([5, -5, 0]);
-        this.enemies[1] = new Enemy([-5, 5, 0]);
+        //this.enemies[0] = new Enemy([5, -5, 0]);
+        //this.enemies[1] = new Enemy([-5, 5, 0]);
 
         this.ground = [];
         this.timer = performance.now();
+
+        this.roads = [];
 
         this.buildMap();
 	}
@@ -34,6 +36,8 @@ class World {
         this.obstacles.forEach(o => o.draw(viewMatrix, projMatrix));
 
         this.ground.forEach(o => o.draw(viewMatrix, projMatrix));
+
+        this.roads.forEach(o => o.draw(viewMatrix, projMatrix));
     }
 
     update() {
@@ -43,7 +47,7 @@ class World {
 
         if (performance.now() - this.timer >= 3000) {
             this.timer = performance.now();
-            this.enemies.push(new Enemy([0, 0, 0]));
+            //this.enemies.push(new Enemy([0, 0, 0]));
         }
     }
     
@@ -107,34 +111,67 @@ class World {
     }
     
     buildMap() {
-        this.ground[0] = new Ground([-30, 0, 0]);
-        this.ground[1] = new Ground([-15, 0, 0]);
-        this.ground[2] = new Ground([0, 0, 0]);
-        this.ground[3] = new Ground([15, 0, 0]);
-        this.ground[4] = new Ground([30, 0, 0]);
+        for (let i = 45; i >= -45; i = i - 15) {
+            for (let j = 45; j >= -45; j = j - 15) {
+                this.ground.push(new Ground([i, j, 0]));
+            }
+        }
 
-        this.ground[5] = new Ground([-30, 15, 0]);
-        this.ground[6] = new Ground([-15, 15, 0]);
-        this.ground[7] = new Ground([0, 15, 0]);
-        this.ground[8] = new Ground([15, 15, 0]);
-        this.ground[9] = new Ground([30, 15, 0]);
+        let angle = 4 / 4 * Math.PI;
+        let upPoint = [1, 1, 0];
+        let leftPoint = [1, 0, 0];
+        for (let i = -4; i < 8; i++) {
+            this.roads.push(new Road(1, [0, i * 2.5], angle, upPoint));
+        }
 
-        this.ground[10] = new Ground([-30, 30, 0]);
-        this.ground[11] = new Ground([-15, 30, 0]);
-        this.ground[12] = new Ground([0, 30, 0]);
-        this.ground[13] = new Ground([15, 30, 0]);
-        this.ground[14] = new Ground([30, 30, 0]);
+        for (let i = 0; i < 9; i++) {
+            this.roads.push(new Road(1, [0, 31 + i * 2.5], angle, upPoint));
+        }
 
-        this.ground[15] = new Ground([-30, -15, 0]);
-        this.ground[16] = new Ground([-15, -15, 0]);
-        this.ground[17] = new Ground([0, -15, 0]);
-        this.ground[18] = new Ground([15, -15, 0]);
-        this.ground[19] = new Ground([30, -15, 0]);
+        this.roads.push(new Road(3, [0, -14.5], angle, upPoint));
 
-        this.ground[20] = new Ground([-30, -30, 0]);
-        this.ground[21] = new Ground([-15, -30, 0]);
-        this.ground[22] = new Ground([0, -30, 0]);
-        this.ground[23] = new Ground([15, -30, 0]);
-        this.ground[24] = new Ground([30, -30, 0]);
+        for (let i = 0; i < 14; i++) {
+            this.roads.push(new Road(1, [0, -18.8 - i * 2.5], angle, upPoint));
+        }
+
+        for (let i = 0; i < 7; i++) {
+            this.roads.push(new Road(1, [4 + i * 2.5, -14.5], angle, leftPoint));
+        }
+
+        this.roads.push(new Road(2, [25.5, -9.6], angle, upPoint));
+
+        for (let i = 0; i < 10; i++) {
+            this.roads.push(new Road(1, [30.52, 19 - i * 2.5], angle, upPoint));
+        }
+
+        this.roads.push(new Road(3, [30.52, 25], angle, upPoint));
+
+        for (let i = 0; i < 9; i++) {
+            this.roads.push(new Road(1, [30.52, 31 + i * 2.5], angle, upPoint));
+        }
+
+        for (let i = 0; i < 7; i++) {
+            this.roads.push(new Road(1, [36.2 + i * 2.5, 25], angle, leftPoint));
+        }
+
+        this.roads.push(new Road(3, [0, 25], angle, upPoint));
+
+        for (let i = 0; i < 9; i++) {
+            this.roads.push(new Road(1, [26 - i * 2.5, 25], angle, leftPoint));
+        }
+
+        for (let i = 0; i < 9; i++) {
+            this.roads.push(new Road(1, [-5 - i * 2.5, 25], angle, leftPoint));
+        }
+
+        this.roads.push(new Road(2, [-31.5, 30], angle, leftPoint));
+
+        for (let i = 0; i < 7; i++) {
+            this.roads.push(new Road(1, [-36.4, 36 + i * 2.5], angle, upPoint));
+        }
+
+        for (let i = 0; i < 20; i++) {
+            this.roads.push(new Road(1, [-4 - i * 2.5, -14.5], angle, leftPoint));
+        }
     }
 }

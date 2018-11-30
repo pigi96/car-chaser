@@ -2,8 +2,8 @@ class Obstacle extends Model {
     constructor(pos) {
         super();
         console.log(pos);
-        this.createBuffers(carObj, 1);
-        this.createTextures(car11);
+        this.createBuffers(house1Obj, 0);
+        this.createTextures(house1);
         this.position[0] = pos[0];
         this.position[1] = pos[1];
         let matrix = mat4.fromTranslation(mat4.create(), pos);
@@ -12,7 +12,7 @@ class Obstacle extends Model {
     }
 
     rotateObject() {
-        let angle = this.angle / 4 * Math.PI;
+        let angle = 2 / 4 * Math.PI;
         mat4.rotate(this.rotatedMatrix, this.posMatrix, angle, [0, 0, 1]);
         this.rotateModelCorrectlyCauseWeDontKnowHowToUseBlender();
     }

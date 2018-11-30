@@ -31,7 +31,6 @@ class Player extends Model {
     }
 
     move(direction, rotation) {
-	    console.log(this.position);
         let matrix = null;
         //this.rotate(rotation);
         switch (direction) {
@@ -107,7 +106,8 @@ class Player extends Model {
     }
 
     outOfBounds() {
-        if (this.position[0] <= -37 || this.position[0] >= 37 || this.position[1] <= -37 || this.position[1] >= 37) {
+	    let bound = 55;
+        if (this.position[0] <= -bound || this.position[0] >= bound || this.position[1] <= -bound || this.position[1] >= bound) {
             window.location.reload();
         }
     }
