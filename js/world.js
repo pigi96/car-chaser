@@ -306,6 +306,7 @@ class World {
     }
 
     resetGame() {
+        wait(3000);
         this.player = new Player();
         this.enemies = [];
         this.heals = [];
@@ -317,4 +318,5 @@ class World {
         
            
 	}
+
 }

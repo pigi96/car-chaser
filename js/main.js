@@ -11,7 +11,9 @@ let health = document.getElementById("hpidhp");
 let startBtn = document.getElementById("start");
 let overlay=document.getElementById("overlay");
 let header=document.getElementById("header");
+let gameover=document.getElementById("gameover");
 let ld=document.getElementById("ld");
+
 function load() {
 	startBtn.style.display="none";
 	overlay.style.display="inline";
@@ -25,6 +27,7 @@ function load() {
 	
 	requestAnimationFrame(update);
 }
+
 
 let deltaTime = 1;
 function update() {
@@ -127,3 +130,11 @@ function createBuffers(modelObj, meshPos) {
     let returned = [vertexPositionBuffer, vertexColorBuffer, vertexIndexBuffer, modelVertices, modelIndices, modelColors];
     return returned;
 }
+
+	function wait(ms){
+        var start = new Date().getTime();
+        var end = start;
+        while(end < start + ms) {
+         end = new Date().getTime();
+        }
+    }
