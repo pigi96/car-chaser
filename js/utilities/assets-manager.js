@@ -66,17 +66,17 @@ function loadAssets() {
         return loadImage("../../assets/roadCrossTexture.jpg");
     }).then(function(url) {
         roadCross = url;
-        main();
+        init();
     })
 }
 
-function main() {
-    normalize(carObj.meshes, 0);
-    normalize(grassObj.meshes, 15);
-    normalize(house1Obj.meshes, 6);
-    normalize(roadForwardObj.meshes, 6);
-    normalize(roadCrossObj.meshes, 15);
-    normalize(road90Obj.meshes, 16);
+function init() {
+    resize(carObj.meshes, 0);
+    resize(grassObj.meshes, 15);
+    resize(house1Obj.meshes, 6);
+    resize(roadForwardObj.meshes, 6);
+    resize(roadCrossObj.meshes, 15);
+    resize(road90Obj.meshes, 16);
     load();
 }
 
@@ -106,7 +106,7 @@ function setAssets() {
     house1Meshes = createBuffers(house1Obj, 0);
 }
 
-function normalize(mashes, rng){
+function resize(mashes, rng){
     if (rng == 0) {
         for (var i = 0; i < mashes.length; i++) {
             let max = Math.max(...mashes[i].vertices);
