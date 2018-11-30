@@ -110,6 +110,10 @@ class World {
         }
     }
     
+    updateScore(){
+        world.player.score += 1;
+    }
+    
     spawnHeals(){
         if(world.heals.length <5){
             console.log("spawning new heal");
@@ -139,11 +143,6 @@ class World {
             world.crates[world.crates.length] = new Crate([Math.round(Math.random()*30*oneX),Math.round(Math.random()*30*oneY), 0]);
        }
     }
-    
-    updateScore(){
-        world.player.score += 1;
-    }
-    
     
     HandlePlayerFatalCollisions(){
         //console.log("Checking for player fatal collisions");
