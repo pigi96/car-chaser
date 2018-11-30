@@ -1,7 +1,7 @@
 class Heal extends Model{
     constructor(pos){
      super();
-        this.createBuffers(crateMeshes);
+        this.createBuffers(hammerMeshes);
         this.createTextures(car10Img);
         this.position[0] = pos[0];
         this.position[1] = pos[1];
