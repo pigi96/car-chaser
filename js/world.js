@@ -125,7 +125,7 @@ class World {
             if(Math.random()< 0.5){
                 oneY = -1;
             }
-            world.heals[world.heals.length] = new Heal([Math.round(Math.random()*30*oneX),Math.round(Math.random()*30*oneY), 0]);
+            world.heals[world.heals.length] = new Heal([Math.round(Math.random()*45*oneX),Math.round(Math.random()*45*oneY), 0]);
        }
     }
     
@@ -140,7 +140,7 @@ class World {
             if(Math.random()< 0.5){
                 oneY = -1;
             }
-            world.crates[world.crates.length] = new Crate([Math.round(Math.random()*30*oneX),Math.round(Math.random()*30*oneY), 0]);
+            world.crates[world.crates.length] = new Crate([Math.round(Math.random()*45*oneX),Math.round(Math.random()*45*oneY), 0]);
        }
     }
     

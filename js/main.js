@@ -5,6 +5,9 @@ let world;
 let score = document.getElementById("score");
 let scoreNode = document.createTextNode("");
 score.appendChild(scoreNode);
+let health = document.getElementById("hpBar");
+let healthNode = document.createTextNode("");
+health.appendChild(healthNode);
 
 function load() {
 	webgl.initialize(vsText, fsText);
@@ -48,6 +51,9 @@ function update() {
 	
 	let score = world.player.score;
 	scoreNode.nodeValue = score.toFixed(0);
+	
+	let hp = world.player.hp;
+	healthNode.nodeValue = hp.toFixed(0)+"/100";
 	
 	gl.clearColor(0.75, 0.85, 0.8, 1.0);
 	gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);

@@ -6,3 +6,12 @@
     left: 10px;
     top: 10px;
 }
+#full {
+    width: 100%;
+    background-color: grey;
+}
+#hpbar {
+    width: 1%;
+    height: 30px;
+    background-color: green;
+}
