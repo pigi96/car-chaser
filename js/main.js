@@ -13,7 +13,6 @@ let startBtn = document.getElementById("start");
 let overlay=document.getElementById("overlay");
 let header=document.getElementById("header");
 let ld=document.getElementById("ld");
-
 function load() {
 	startBtn.style.display="none";
 	overlay.style.display="inline";
@@ -58,7 +57,7 @@ function update() {
         scoreNode.nodeValue = score.toFixed(0);
 
         let over = world.player.score;
-        gameoverNode.nodeValue = over.toFixed(0);
+       //gameoverNode.nodeValue = over.toFixed(0);
 
         let hp = world.player.hp;
         health.value = hp.toFixed(0);
