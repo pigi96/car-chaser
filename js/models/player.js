@@ -175,7 +175,7 @@ class Player extends Model {
     outOfBounds() {
 	    let bound = 52;
         if (this.position[0] <= -bound || this.position[0] >= bound || this.position[1] <= -bound || this.position[1] >= bound) {
-            window.location.reload();
+            world.resetGame();
         }
     }
 

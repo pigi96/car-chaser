@@ -16,10 +16,6 @@ function load() {
 	world = new World();
     
 	input = new Input();
-
-	setInterval(world.spawnHeals,10000);
-	setInterval(world.spawnCrates,8000);
-	setInterval(world.updateScore,1000);
 	
 	requestAnimationFrame(update);
 }

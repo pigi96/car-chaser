@@ -12,7 +12,14 @@ class World {
         //this.enemies.push(new Enemy([-5, 5, 0]));
 
         this.ground = [];
-        this.timer = performance.now();
+        this.timerForEnemies = performance.now();
+        this.timerForHeals = performance.now();
+        this.timerForCrates = performance.now();
+        this.timerForScore = performance.now();
+        this.spawnEnemiesAt = 3000;
+        this.spawnHealsAt = 80000;
+        this.spawnCratesAt = 7000;
+        this.updateScoreAt = 1000;
 
         this.roads = [];
 
@@ -52,17 +59,32 @@ class World {
         this.HandleNonFatalCollisions();
         this.HandleEnemyFatalCollisions();
         if (!this.HandlePlayerFatalCollisions()) {
-            window.location.reload();
+            this.resetGame();
         }
 
         this.enemies.forEach(o => o.attackPlayer(this.player));
 
         this.player.outOfBounds();
 
-        if (performance.now() - this.timer >= 3000) {
-            this.timer = performance.now();
+        if (performance.now() - this.timerForEnemies >= this.spawnEnemiesAt) {
+            this.timerForEnemies = performance.now();
 
             this.spawnNewEnemy();
+        }
+        if (performance.now() - this.timerForHeals >= this.spawnHealsAt) {
+            this.timerForHeals = performance.now();
+
+            this.spawnHeals();
+        }
+        if (performance.now() - this.timerForCrates >= this.spawnCratesAt) {
+            this.timerForCrates = performance.now();
+
+            this.spawnCrates();
+        }
+        if (performance.now() - this.timerForScore >= this.updateScoreAt) {
+            this.timerForScore = performance.now();
+
+            this.updateScore();
         }
     }
 
@@ -111,7 +133,7 @@ class World {
                 if(world.player.hp < 100){
                     console.log("lets regen!");
                     world.player.hp = Math.min(world.player.hp+20,100);
-                    world.heals.splice(i,Math.min(i+1,world.heals.length));
+                    world.heals.splice(i,1);
                 }
             }
         }
@@ -123,7 +145,7 @@ class World {
             if(world.crates[i].collision(world.crates[i],world.player)){
                     console.log("ay money!");
                     world.player.score += Math.round(Math.random()*10)*10+10;
-                    world.crates.splice(i,Math.min(i+1,world.crates.length));
+                    world.crates.splice(i,1);
             }
         }
     }
@@ -200,14 +222,14 @@ class World {
                     }
                 }
             }
-            if(world.player.collision(world.player,world.enemies[i])){
+            if(world.player.collision(world.player, world.enemies[i])){
+                console.log(world.enemies[i]);
                     world.player.hp -=1.5;
                     world.enemies[i].hp -=1.5;
                     console.log("player hp"+world.player.hp);
                     if(world.player.hp <= 0){
-                        window.location.reload();
-                    }
-                    if(world.enemies[i].hp <= 0){
+                        this.resetGame();
+                    } else if(world.enemies[i].hp <= 0){
                         world.enemies.splice(i, 1);
                     }
                 
@@ -283,4 +305,15 @@ class World {
         //this.obstacles[1] = new Obstacle(1,[-5, 0, 0]);
         //this.obstacles.push(new Obstacle(2, [10, 0, 0]));
     }
+
+    resetGame() {
+        this.player = new Player();
+        this.enemies = [];
+        this.heals = [];
+        this.crates = [];
+        this.timerForEnemies = performance.now();
+        this.timerForHeals = performance.now();
+        this.timerForCrates = performance.now();
+        this.timerForScore = performance.now();
+	}
 }
