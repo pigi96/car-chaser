@@ -7,11 +7,9 @@ class World {
 		this.heals = [];
         this.crates = [];
 		this.enemy.position = [0, 0];
-		this.roads = [];
 
         //this.enemies[0] = new Enemy([5, -5, 0]);
         //this.enemies.push(new Enemy([-5, 5, 0]));
-
         this.ground = [];
         this.timerForEnemies = performance.now();
         this.timerForHeals = performance.now();
@@ -22,6 +20,8 @@ class World {
         this.spawnCratesAt = 7000;
         this.updateScoreAt = 1000;
 
+        this.roads = [];
+
         this.buildMap();
 	}
 
@@ -31,7 +31,7 @@ class World {
 
     draw(viewMatrix, projMatrix) {
 	    this.update();
-
+    
 	    this.player.draw(viewMatrix, projMatrix);
 	    //console.log(this.player.position);
 
@@ -68,7 +68,7 @@ class World {
         if (performance.now() - this.timerForEnemies >= this.spawnEnemiesAt) {
             this.timerForEnemies = performance.now();
 
-            //this.spawnNewEnemy();
+            this.spawnNewEnemy();
         }
         if (performance.now() - this.timerForHeals >= this.spawnHealsAt) {
             this.timerForHeals = performance.now();
@@ -339,6 +339,7 @@ class World {
     }
 
     resetGame() {
+        wait(3000);
         this.player = new Player();
         this.enemies = [];
         this.heals = [];

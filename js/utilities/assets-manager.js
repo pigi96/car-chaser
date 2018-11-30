@@ -129,7 +129,12 @@ function init() {
     resize(containerObj.meshes, 5);
     resize(cabinObj.meshes, 5.5);
     resize(blacksmithObj.meshes, 5);
-    load();
+
+    let startBtn = document.getElementById("start");
+    let ld=document.getElementById("ld");
+    ld.innerHTML = "Done";
+    startBtn.disabled= false;
+    //load();
 }
 
 function setAssets() {
