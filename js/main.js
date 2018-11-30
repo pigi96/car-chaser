@@ -2,6 +2,12 @@
 
 let input;
 let world;
+let score = document.getElementById("score");
+let scoreNode = document.createTextNode("");
+score.appendChild(scoreNode);
+let health = document.getElementById("hpBar");
+let healthNode = document.createTextNode("");
+health.appendChild(healthNode);
 
 function load() {
 	webgl.initialize(vsText, fsText);
@@ -10,6 +16,7 @@ function load() {
 	world = new World();
     
 	input = new Input();
+	
 	setInterval(world.HandleNonFatalCollisions,500);
 	setInterval(world.spawnHeals,10000);
 	setInterval(world.HandleHealCollisions,250);
@@ -27,7 +34,6 @@ function update() {
 	const gl = webgl.gl;
 	gl.useProgram(webgl.program);
 
-
     let viewMatrix = new Float32Array(16);
     let projMatrix = new Float32Array(16);
 
@@ -42,7 +48,13 @@ function update() {
     let identityMatrix = new Float32Array(16);
 	mat4.identity(identityMatrix);
 	//gl.uniformMatrix4fv(matWorldUniformLocation, gl.FALSE, worldMatrix);
-
+	
+	let score = world.player.score;
+	scoreNode.nodeValue = score.toFixed(0);
+	
+	let hp = world.player.hp;
+	healthNode.nodeValue = hp.toFixed(0)+"/100";
+	
 	gl.clearColor(0.75, 0.85, 0.8, 1.0);
 	gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
 	
