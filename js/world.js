@@ -339,7 +339,9 @@ class World {
     }
 
     resetGame() {
-        wait(3000);
+        let score = world.player.score + " -> Gameover, press T to start a new game!";
+        scoreNode.nodeValue = score;
+	    freeze = true;
         this.player = new Player();
         this.enemies = [];
         this.heals = [];

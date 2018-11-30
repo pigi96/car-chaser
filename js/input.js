@@ -41,6 +41,11 @@ class Input {
             case "d":
                 world.player.rotation("right");
                 break;
+            case "t":
+                console.log("izi");
+                freeze = false;
+                break;
+
         }
     }
     handleKeyUp(event) {

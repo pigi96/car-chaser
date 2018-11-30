@@ -1,5 +1,6 @@
 "use strict"
 
+let freeze;
 let input;
 let world;
 let score = document.getElementById("score");
@@ -11,7 +12,6 @@ let health = document.getElementById("hpidhp");
 let startBtn = document.getElementById("start");
 let overlay=document.getElementById("overlay");
 let header=document.getElementById("header");
-let gameover=document.getElementById("gameover");
 let ld=document.getElementById("ld");
 
 function load() {
@@ -24,6 +24,8 @@ function load() {
 	world = new World();
     
 	input = new Input();
+
+	freeze = false;
 	
 	requestAnimationFrame(update);
 }
@@ -31,45 +33,50 @@ function load() {
 
 let deltaTime = 1;
 function update() {
-    let frameStart = performance.now();
+    console.log(freeze);
+    if (!freeze) {
+        let frameStart = performance.now();
 
-	const gl = webgl.gl;
-	gl.useProgram(webgl.program);
+        const gl = webgl.gl;
+        gl.useProgram(webgl.program);
 
-    let viewMatrix = new Float32Array(16);
-    let projMatrix = new Float32Array(16);
+        let viewMatrix = new Float32Array(16);
+        let projMatrix = new Float32Array(16);
 
+        mat4.perspective(projMatrix, glMatrix.toRadian(60), webgl.width / webgl.height, 0.1, 1000.0);
 
-    mat4.perspective(projMatrix, glMatrix.toRadian(60), webgl.width / webgl.height, 0.1, 1000.0);
+        mat4.lookAt(viewMatrix, [0, input.zoom, input.zoom], [0, 0, 0], [0, 1, 0]);
+        //mat4.fromRotation(viewMatrix, glMatrix.toRadian(40), [1.0, 0.0, 0.0]);
+        mat4.translate(viewMatrix, viewMatrix, [-world.player.position[0], -world.player.position[1], 0]);
+        //mat4.multiply(projMatrix, projMatrix, viewMatrix);
 
-	mat4.lookAt(viewMatrix, [0, input.zoom, input.zoom], [0, 0, 0], [0, 1, 0]);
-    //mat4.fromRotation(viewMatrix, glMatrix.toRadian(40), [1.0, 0.0, 0.0]);
-    mat4.translate(viewMatrix, viewMatrix, [-world.player.position[0], -world.player.position[1], 0]);
-    //mat4.multiply(projMatrix, projMatrix, viewMatrix);
+        let identityMatrix = new Float32Array(16);
+        mat4.identity(identityMatrix);
+        //gl.uniformMatrix4fv(matWorldUniformLocation, gl.FALSE, worldMatrix);
 
-    let identityMatrix = new Float32Array(16);
-	mat4.identity(identityMatrix);
-	//gl.uniformMatrix4fv(matWorldUniformLocation, gl.FALSE, worldMatrix);
-	
-	let score = world.player.score;
-	scoreNode.nodeValue = score.toFixed(0);
-	
-	let hp = world.player.hp;
-	health.value = hp.toFixed(0);
-	
-	gl.clearColor(0.4, 0.4, 1, 1.0);
-	gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
-	
-	world.draw(viewMatrix, projMatrix);
-	
-	deltaTime = performance.now() - frameStart;
+        let score = world.player.score;
+        scoreNode.nodeValue = score.toFixed(0);
+
+        let over = world.player.score;
+        gameoverNode.nodeValue = over.toFixed(0);
+
+        let hp = world.player.hp;
+        health.value = hp.toFixed(0);
+
+        gl.clearColor(0.4, 0.4, 1, 1.0);
+        gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
+
+        world.draw(viewMatrix, projMatrix);
+
+        deltaTime = performance.now() - frameStart;
+    }
 	requestAnimationFrame(update);
 }
 
 function createTextures(img) {
     const gl = webgl.gl;
     gl.useProgram(webgl.program);
-    // loooooool
+
     let texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);

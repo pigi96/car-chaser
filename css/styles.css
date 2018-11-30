@@ -2,7 +2,7 @@
     position: relative;
 }
 #overlay {
-    position: absolute;
+    position: relative;
     left: 380px;
     top: 30px;
     display: none;
