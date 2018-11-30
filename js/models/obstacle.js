@@ -2,8 +2,8 @@ class Obstacle extends Model {
     constructor(pos) {
         super();
         console.log(pos);
-        this.createBuffers(house1Obj, 0);
-        this.createTextures(house1);
+        this.createBuffers(house1Meshes);
+        this.createTextures(house1Img);
         this.position[0] = pos[0];
         this.position[1] = pos[1];
         let matrix = mat4.fromTranslation(mat4.create(), pos);

@@ -4,8 +4,8 @@ class Player extends Model {
 	constructor() {
 		super();
 
-		this.createBuffers(carObj, 3);
-		this.createTextures(car2);
+		this.createBuffers(car3Meshes);
+		this.createTextures(car2Img);
         
         this.way = "stop";
         this.rotat = "stop";
@@ -106,7 +106,7 @@ class Player extends Model {
     }
 
     outOfBounds() {
-	    let bound = 55;
+	    let bound = 52;
         if (this.position[0] <= -bound || this.position[0] >= bound || this.position[1] <= -bound || this.position[1] >= bound) {
             window.location.reload();
         }

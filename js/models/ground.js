@@ -2,8 +2,8 @@ class Ground extends Model {
     constructor(pos) {
         super();
 
-        this.createBuffers(grassObj, 0);
-        this.createTextures(grass);
+        this.createBuffers(grassMeshes);
+        this.createTextures(grassImg);
 
         let angle = 4 / 4 * Math.PI;
         mat4.rotate(this.rotatedMatrix, this.posMatrix, angle, [1, 1, 0]);

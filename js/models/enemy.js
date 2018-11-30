@@ -7,20 +7,20 @@ class Enemy extends Model {
         let random = Math.floor(Math.random() * 3);
         switch (random) {
             case 0:
-                this.createBuffers(carObj, 2);
-                this.createTextures(car8);
+                this.createBuffers(car2Meshes);
+                this.createTextures(car8Img);
                 this.hp = 80;
                 this.speed = 0.15;
                 break;
             case 1:
-                this.createBuffers(carObj, 3);
-                this.createTextures(car1);
+                this.createBuffers(car3Meshes);
+                this.createTextures(car1Img);
                 this.hp= 120;
                 this.speed = 0.1;
                 break;
             case 2:
-                this.createBuffers(carObj, 0);
-                this.createTextures(car11);
+                this.createBuffers(car0Meshes);
+                this.createTextures(car11Img);
                 this.hp = 300;
                 this.speed = 0.08;
                 break;

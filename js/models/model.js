@@ -38,79 +38,18 @@ class Model {
         return false;
     }
 
-	createBuffers(modelObj, meshPos) {
-		const gl = webgl.gl;
-		gl.useProgram(webgl.program);
+	createBuffers(meshes) {
+		this.modelVertices = meshes[3];
+		this.modelIndices = meshes[4];
+		this.modelColors = meshes[5];
 
-		let modelVertices = modelObj.meshes[meshPos].vertices;
-        let modelIndices = [].concat.apply([], modelObj.meshes[meshPos].faces);
-        let modelColors = modelObj.meshes[meshPos].texturecoords[0];
-
-		this.modelVertices = modelVertices;
-		this.modelIndices = modelIndices;
-		this.modelColors = modelColors;
-		//console.log(meshPos, modelVertices);
-
-		const vertexPositionBuffer = gl.createBuffer();
-		gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(modelVertices), gl.STATIC_DRAW);
-
-		const vertexColorBuffer = gl.createBuffer();
-		gl.bindBuffer(gl.ARRAY_BUFFER, vertexColorBuffer);
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(modelColors), gl.STATIC_DRAW);
-
-		const vertexIndexBuffer = gl.createBuffer();
-		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, vertexIndexBuffer);
-		gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(modelIndices), gl.STATIC_DRAW);
-
-		gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
-		let positionAttribLocation = gl.getAttribLocation(webgl.program, 'aVertexPosition');
-		gl.vertexAttribPointer(
-			positionAttribLocation, // Attribute location
-			3, // Number of elements per attribute
-			gl.FLOAT, // Type of elements
-			gl.FALSE,
-			3 * Float32Array.BYTES_PER_ELEMENT, // Size of an individual vertex
-			0 // Offset from the beginning of a single vertex to this attribute
-		);
-		gl.enableVertexAttribArray(positionAttribLocation);
-
-		gl.bindBuffer(gl.ARRAY_BUFFER, vertexColorBuffer);
-		let colorAttribLocation = gl.getAttribLocation(webgl.program, 'aVertexColor');
-		gl.vertexAttribPointer(
-            colorAttribLocation, // Attribute location
-			2, // Number of elements per attribute
-			gl.FLOAT, // Type of elements
-			gl.FALSE,
-			2 * Float32Array.BYTES_PER_ELEMENT, // Size of an individual vertex
-			0
-		);
-		gl.enableVertexAttribArray(colorAttribLocation);
-
-		this.vertexPositionBuffer = vertexPositionBuffer;
-		this.vertexColorBuffer = vertexColorBuffer;
-		this.vertexIndexBuffer = vertexIndexBuffer;
+		this.vertexPositionBuffer = meshes[0];
+		this.vertexColorBuffer = meshes[1];
+		this.vertexIndexBuffer = meshes[2];
 	}
 
 	createTextures(img) {
-		const gl = webgl.gl;
-		gl.useProgram(webgl.program);
-
-		let texture = gl.createTexture();
-		gl.bindTexture(gl.TEXTURE_2D, texture);
-		gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-		gl.texImage2D(
-			gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA,
-			gl.UNSIGNED_BYTE,
-			img
-		);
-		gl.bindTexture(gl.TEXTURE_2D, null);
-
-		this.texture = texture;
+		this.texture = img;
 	}
 
 	draw(viewMatrix, projMatrix) {

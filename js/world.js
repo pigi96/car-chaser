@@ -47,8 +47,37 @@ class World {
 
         if (performance.now() - this.timer >= 3000) {
             this.timer = performance.now();
-            //this.enemies.push(new Enemy([0, 0, 0]));
+
+            this.spawnNewEnemy();
         }
+    }
+
+    spawnNewEnemy() {
+	    let x_range = Math.floor(Math.random() * 2);
+	    let y_range = Math.floor(Math.random() * 2);
+	    console.log(x_range);
+	    let x = 0;
+	    let y = 0;
+	    if (x_range == 0) {
+	        x = -10;
+        } else {
+	        x = +10;
+        }
+        if (y_range == 0) {
+            y = -10;
+        } else {
+            y = +10;
+        }
+
+        x += this.player.position[0];
+	    y += this.player.position[1];
+
+	    let x_ran = Math.floor(Math.random() * 20) - 10 + x;
+	    let y_ran = Math.floor(Math.random() * 20) - 10 + y;
+
+
+
+        this.enemies.push(new Enemy([x_ran, y_ran, 0]));
     }
     
    /* CheckForCollisions(){
