@@ -17,6 +17,10 @@ class Player extends Model {
         this.score = 0;
         this.width = 1.5;
         this.height = 1.5;
+
+        this.hit = false;
+        this.lastHit = 500;
+        this.counter = this.lastHit;
 	}
 
     rotateModelCorrectlyCauseWeDontKnowHowToUseBlender() {

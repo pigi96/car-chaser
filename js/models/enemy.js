@@ -4,25 +4,31 @@ class Enemy extends Model {
 	constructor(pos) {
         super();
 
+        let speedMultiplier = 1.25 - (Math.random() * 0.5);
         let random = Math.floor(Math.random() * 3);
         switch (random) {
             case 0:
                 this.createBuffers(car2Meshes);
                 this.createTextures(car8Img);
                 this.hp = 80;
-                this.speed = 0.15;
+                this.speed = 0.15 * speedMultiplier;
                 break;
             case 1:
                 this.createBuffers(car3Meshes);
                 this.createTextures(car1Img);
                 this.hp= 120;
-                this.speed = 0.1;
+                this.speed = 0.1 * speedMultiplier;
                 break;
             case 2:
+                let random1 = Math.floor(Math.random() * 2);
                 this.createBuffers(car0Meshes);
-                this.createTextures(car11Img);
+                if (random1 == 0) {
+                    this.createTextures(car11Img);
+                } else {
+                    this.createTextures(car10Img);
+                }
                 this.hp = 300;
-                this.speed = 0.08;
+                this.speed = 0.08 * speedMultiplier;
                 break;
         }
         this.position[0] = pos[0];
@@ -32,6 +38,10 @@ class Enemy extends Model {
 
         this.width = 1.5;
         this.height = 1.5;
+
+        this.hit = false;
+        this.lastHit = 500;
+        this.counter = this.lastHit;
 	}
 	
 

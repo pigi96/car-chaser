@@ -9,7 +9,7 @@ class World {
 		this.enemy.position = [0, 0];
 
         //this.enemies[0] = new Enemy([5, -5, 0]);
-        this.enemies.push(new Enemy([-5, 5, 0]));
+        //this.enemies.push(new Enemy([-5, 5, 0]));
 
         this.ground = [];
         this.timer = performance.now();
@@ -47,19 +47,27 @@ class World {
     update() {
         this.player.update();
 
-        //this.enemies.forEach(o => o.attackPlayer(this.player));
+        this.HandleHealCollisions();
+        this.HandleCrateCollisions();
+        this.HandleNonFatalCollisions();
+        this.HandleEnemyFatalCollisions();
+        if (!this.HandlePlayerFatalCollisions()) {
+            window.location.reload();
+        }
+
+        this.enemies.forEach(o => o.attackPlayer(this.player));
 
         this.player.outOfBounds();
 
         if (performance.now() - this.timer >= 3000) {
             this.timer = performance.now();
 
-            //this.spawnNewEnemy();
+            this.spawnNewEnemy();
         }
     }
 
     spawnNewEnemy() {
-	    let x_range = Math.floor(Math.random() * 2);
+	    /*let x_range = Math.floor(Math.random() * 2);
 	    let y_range = Math.floor(Math.random() * 2);
 	    console.log(x_range);
 	    let x = 0;
@@ -79,11 +87,21 @@ class World {
 	    y += this.player.position[1];
 
 	    let x_ran = Math.floor(Math.random() * 20) - 10 + x;
-	    let y_ran = Math.floor(Math.random() * 20) - 10 + y;
+	    let y_ran = Math.floor(Math.random() * 20) - 10 + y;*/
 
+        let possibleSpawns = [
+            [0, 50],
+            [30, 50],
+            [50, 25],
+            [0, -50],
+            [-50, -14.5],
+            [-36, 50]
+        ];
 
-
-        this.enemies.push(new Enemy([x_ran, y_ran, 0]));
+        let random = Math.floor(Math.random() * 6);
+        let found = possibleSpawns[random];
+        console.log(found[0], found[1]);
+        this.enemies.push(new Enemy([found[0], found[1], 0]));
     }
     
     HandleHealCollisions(){
@@ -156,41 +174,41 @@ class World {
     
     HandleEnemyFatalCollisions(){
         //console.log("Checking for enemy fatal collisions");
-        for(let i=0;i< world.obstacles.length;i++){
-            for(let j=0;j< world.enemies.length;j++){
+        for (let i = 0; i < world.obstacles.length; i++) {
+            for(let j = 0; j < world.enemies.length; j++) {
                 if(world.obstacles[i].collision(world.obstacles[i],world.enemies[j])){
                     //console.log("fatal");
-                    world.enemies.splice(j,Math.min(j+1,world.enemies.length));
+                    world.enemies.splice(j, 1);
                 }
             }
         }
     }
     
     HandleNonFatalCollisions(){
-        console.log("Handling nonfatal collisions");
-        for(let i=0;i< world.enemies.length;i++){
-            for(let j=i+1;j< world.enemies.length;j++){
-                if(world.enemies[i].collision(world.enemies[i],world.enemies[j])){
-                    world.enemies[i].hp -=40;
-                    world.enemies[j].hp -=40;
+        //console.log("Handling nonfatal collisions");
+        for (let i = 0; i < world.enemies.length; i++) {
+            for(let j = i+1;j < world.enemies.length; j++) {
+                if(world.enemies[i].collision(world.enemies[i], world.enemies[j])){
+                    world.enemies[i].hp -=2;
+                    world.enemies[j].hp -=2;
                     console.log("enemy hp: "+world.enemies[i].hp);
                     if(world.enemies[i].hp <= 0){
-                        world.enemies.splice(i,Math.min(i+1,world.enemies.length));
+                        world.enemies.splice(i, 1);
                     }
                     if(world.enemies[j].hp <= 0){
-                        world.enemies.splice(j,Math.min(j+1,world.enemies.length));
+                        world.enemies.splice(j, 1);
                     }
                 }
             }
             if(world.player.collision(world.player,world.enemies[i])){
-                    world.player.hp -=30;
-                    world.enemies[i].hp -=30;
+                    world.player.hp -=1.5;
+                    world.enemies[i].hp -=1.5;
                     console.log("player hp"+world.player.hp);
                     if(world.player.hp <= 0){
                         window.location.reload();
                     }
                     if(world.enemies[i].hp <= 0){
-                        world.enemies.splice(i,Math.min(i+1,world.enemies.length));
+                        world.enemies.splice(i, 1);
                     }
                 
             }

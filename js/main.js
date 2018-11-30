@@ -16,12 +16,9 @@ function load() {
 	world = new World();
     
 	input = new Input();
-	
-	setInterval(world.HandleNonFatalCollisions,500);
+
 	setInterval(world.spawnHeals,10000);
-	setInterval(world.HandleHealCollisions,250);
 	setInterval(world.spawnCrates,8000);
-	setInterval(world.HandleCrateCollisions,250);
 	setInterval(world.updateScore,1000);
 	
 	requestAnimationFrame(update);
@@ -55,7 +52,7 @@ function update() {
 	let hp = world.player.hp;
 	health.value = hp.toFixed(0);
 	
-	gl.clearColor(0.75, 0.85, 0.8, 1.0);
+	gl.clearColor(0.4, 0.4, 1, 1.0);
 	gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT);
 	
 	world.draw(viewMatrix, projMatrix);
