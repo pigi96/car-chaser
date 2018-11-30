@@ -10,7 +10,6 @@ class World {
 
         //this.enemies[0] = new Enemy([5, -5, 0]);
         //this.enemies.push(new Enemy([-5, 5, 0]));
-
         this.ground = [];
         this.timerForEnemies = performance.now();
         this.timerForHeals = performance.now();
@@ -20,7 +19,7 @@ class World {
         this.spawnHealsAt = 80000;
         this.spawnCratesAt = 7000;
         this.updateScoreAt = 1000;
-
+        
         this.roads = [];
 
         this.buildMap();
@@ -315,5 +314,7 @@ class World {
         this.timerForHeals = performance.now();
         this.timerForCrates = performance.now();
         this.timerForScore = performance.now();
+        
+           
 	}
 }

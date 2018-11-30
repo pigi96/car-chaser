@@ -8,11 +8,17 @@ score.appendChild(scoreNode);
 let health = document.getElementById("hpidhp");
 //let healthNode = document.createTextNode("");
 //health.appendChild(healthNode);
-
+let startBtn = document.getElementById("start");
+let overlay=document.getElementById("overlay");
+let header=document.getElementById("header");
+let ld=document.getElementById("ld");
 function load() {
+	startBtn.style.display="none";
+	overlay.style.display="inline";
+	header.style.display="none";
+	ld.style.display="none";
 	webgl.initialize(vsText, fsText);
     setAssets();
-
 	world = new World();
     
 	input = new Input();

@@ -99,7 +99,12 @@ function init() {
     resize(hammer.meshes, 1);
     resize(crate.meshes, 1);
     resize(containerObj.meshes, 5);
-    load();
+    
+    let startBtn = document.getElementById("start");
+    let ld=document.getElementById("ld");
+    ld.innerHTML = "Done";
+    startBtn.disabled= false;
+    //load();
 }
 
 function setAssets() {
