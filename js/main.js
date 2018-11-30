@@ -67,7 +67,7 @@ function update() {
 function createTextures(img) {
     const gl = webgl.gl;
     gl.useProgram(webgl.program);
-
+    // loooooool
     let texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);

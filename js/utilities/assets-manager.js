@@ -6,8 +6,9 @@ let grassMeshes, roadForwardMeshes, road90Meshes, roadCrossMeshes, house1Meshes;
 let car0Meshes, car1Meshes, car2Meshes, car3Meshes;
 let hammerMeshes,crateMeshes;
 let crateImg;
+let containerMeshes, containerImg;
 
-let vsText, fsText, carObj, car1, car2, car4, car6, car8, car10, car11, grassObj, grass, house1Obj, house1, roadForwardObj, roadForward, road90Obj, road90, roadCrossObj, roadCross,hammer,crate,crateTex;
+let vsText, fsText, carObj, car1, car2, car4, car6, car8, car10, car11, grassObj, grass, house1Obj, house1, roadForwardObj, roadForward, road90Obj, road90, roadCrossObj, roadCross,hammer,crate,crateTex,containerObj, containerTex;
 function loadAssets() {
     loadTextResource("../../shaders/shader.vs.glsl").then(function (url) {
         vsText = url;
@@ -70,13 +71,20 @@ function loadAssets() {
         roadCross = url;
         return loadJSONResource("../../assets/hammer.json");
     }).then(function (url) {
-         hammer = url;
+        hammer = url;
+        console.log(hammer);
         return loadJSONResource("../../assets/crate1.json");
     }).then(function (url) {
         crate = url;
         return loadImage("../../assets/crateTex.png");
-    }).then(function(url) {
+    }).then(function (url) {
         crateTex = url;
+        return loadJSONResource("../../assets/containerObj.json");
+    }).then(function (url) {
+        containerObj = url;
+        return loadImage("../../assets/container.jpg");
+    }).then(function(url) {
+        containerTex = url;
         init();
     })
 }
@@ -90,6 +98,7 @@ function init() {
     resize(road90Obj.meshes, 16);
     resize(hammer.meshes, 1);
     resize(crate.meshes, 1);
+    resize(containerObj.meshes, 5);
     load();
 }
 
@@ -121,7 +130,9 @@ function setAssets() {
     hammerMeshes = createBuffers(hammer,0);
     crateMeshes = createBuffers(crate,0);
     crateImg = createTextures(crateTex);
-    
+
+    containerMeshes = createBuffers(containerObj, 0);
+    containerImg = createTextures(containerTex);
 }
 
 function resize(mashes, rng){
@@ -129,7 +140,7 @@ function resize(mashes, rng){
         for (var i = 0; i < mashes.length; i++) {
             let max = Math.max(...mashes[i].vertices);
             let min = Math.min(...mashes[i].vertices);
-            let rng = 4;
+            let rng = 3;
             if (i == 1 || i == 2 || i == 3) {
                 rng = 2;
             }

@@ -13,10 +13,10 @@ class Player extends Model {
         this.turnSpeed = 0.003;
         this.look = "up";
         this.angle = 0;
-        this.pointingTo = [this.speed, 0.0, 0.0];
+        this.pointingTo = [0.0, -this.speed, 0.0];
         this.score = 0;
-        this.width = 2;
-        this.height = 2;
+        this.width = 1;
+        this.height = 1;
 	}
 
     rotateModelCorrectlyCauseWeDontKnowHowToUseBlender() {
@@ -30,9 +30,70 @@ class Player extends Model {
         this.rotateModelCorrectlyCauseWeDontKnowHowToUseBlender();
     }
 
+    rotateVector(vec, ang) {
+        ang = -ang * (Math.PI/180);
+        let cos = Math.cos(ang);
+        let sin = Math.sin(ang);
+        return new Array(Math.round(10000*(vec[0] * cos - vec[1] * sin))/10000, Math.round(10000*(vec[0] * sin + vec[1] * cos))/10000);
+    };
+
     move(direction, rotation) {
-        let matrix = null;
         //this.rotate(rotation);
+        let sum = Math.sqrt(this.pointingTo[0]*this.pointingTo[0]+this.pointingTo[1]*this.pointingTo[1]);
+        if (sum == 0) {
+            sum = 0.0001;
+        }
+        this.pointingTo[0] = this.pointingTo[0] / sum;
+        this.pointingTo[1] = this.pointingTo[1] / sum;
+
+        let angle = Math.atan2(this.pointingTo[0], -this.pointingTo[1]);
+        if (angle >= 0) {
+            this.angle = angle * (4 / Math.PI);
+        } else {
+            this.angle = 4 + (4 + angle * (4 / Math.PI));
+        }
+
+        switch(direction) {
+            case "up":
+                let matrix = mat4.fromTranslation(mat4.create(), [this.speed*this.pointingTo[0], this.speed*this.pointingTo[1], 0.0]);
+                mat4.multiply(this.posMatrix, this.posMatrix, matrix);
+                this.position[0] = this.posMatrix[12];
+                this.position[1] = this.posMatrix[13];
+                switch (rotation) {
+                    case "left":
+                        this.pointingTo = this.rotateVector(this.pointingTo, 4);
+                        break;
+                    case "right":
+                        this.pointingTo = this.rotateVector(this.pointingTo, -4);
+                        break;
+                    case "stop":
+                        // Do nothing
+                        break;
+                }
+                break;
+            case "down":
+                let matrix1 = mat4.fromTranslation(mat4.create(), [-this.speed*this.pointingTo[0], -this.speed*this.pointingTo[1], 0.0]);
+                mat4.multiply(this.posMatrix, this.posMatrix, matrix1);
+                this.position[0] = this.posMatrix[12];
+                this.position[1] = this.posMatrix[13];
+                switch (rotation) {
+                    case "left":
+                        this.pointingTo = this.rotateVector(this.pointingTo, 3);
+                        break;
+                    case "right":
+                        this.pointingTo = this.rotateVector(this.pointingTo, -3);
+                        break;
+                    case "stop":
+                        // Do nothing
+                        break;
+                }
+                break;
+            case "stop":
+                // Do nothing
+                break;
+        }
+
+        /*
         switch (direction) {
             case "up":
                 if(world.HandlePlayerFatalCollisions()){
@@ -99,6 +160,8 @@ class Player extends Model {
                 }
                 break;
         }
+        */
+
         this.position[0] = this.posMatrix[12];
         this.position[1] = this.posMatrix[13];
         this.camera();
@@ -121,43 +184,6 @@ class Player extends Model {
     camera() {
 
     }
-
-    /*
-rotate(rotation) {
-    switch (rotation) {
-        case "left":
-            if (this.pointingTo[0] >= 0 && this.pointingTo[0] <= this.speed) {
-                this.pointingTo[0] -= this.turnSpeed;
-                this.pointingTo[2] += this.turnSpeed;
-            } else if (this.pointingTo[0] <= 0 && this.pointingTo[0] >= -this.speed) {
-                this.pointingTo[0] -= this.turnSpeed;
-                this.pointingTo[2] -= this.turnSpeed;
-            } else if (this.pointingTo[0] >= -this.speed && this.pointingTo[0] <= 0) {
-                this.pointingTo[0] += this.turnSpeed;
-                this.pointingTo[2] -= this.turnSpeed;
-            } else if (this.pointingTo[0] >= 0 && this.pointingTo[0] <= this.speed) {
-                this.pointingTo[0] += this.turnSpeed;
-                this.pointingTo[2] += this.turnSpeed;
-            }
-            break;
-        case "right":
-            if (this.pointingTo[0] >= 0 && this.pointingTo[0] <= this.speed) {
-                this.pointingTo[0] += this.turnSpeed;
-                this.pointingTo[2] -= this.turnSpeed;
-            } else if (this.pointingTo[0] <= 0 && this.pointingTo[0] >= -this.speed) {
-                this.pointingTo[0] += this.turnSpeed;
-                this.pointingTo[2] += this.turnSpeed;
-            } else if (this.pointingTo[0] >= -this.speed && this.pointingTo[0] <= 0) {
-                this.pointingTo[0] -= this.turnSpeed;
-                this.pointingTo[2] += this.turnSpeed;
-            } else if (this.pointingTo[0] >= 0 && this.pointingTo[0] <= this.speed) {
-                this.pointingTo[0] -= this.turnSpeed;
-                this.pointingTo[2] -= this.turnSpeed;
-            }
-            break;
-    }
-}
-*/
 
     update() {
         this.move(this.way, this.rotat);

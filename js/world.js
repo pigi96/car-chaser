@@ -7,11 +7,9 @@ class World {
 		this.heals = [];
         this.crates = [];
 		this.enemy.position = [0, 0];
-        this.obstacles[0] = new Obstacle([5, 0, 0]);
-        this.obstacles[1] = new Obstacle([-5, 0, 0]);
 
         //this.enemies[0] = new Enemy([5, -5, 0]);
-        //this.enemies[1] = new Enemy([-5, 5, 0]);
+        this.enemies.push(new Enemy([-5, 5, 0]));
 
         this.ground = [];
         this.timer = performance.now();
@@ -31,7 +29,7 @@ class World {
 	    this.player.draw(viewMatrix, projMatrix);
 	    //console.log(this.player.position);
 
-        this.enemies.forEach(o => o.attackPlayer(this.player));
+
         this.enemies.forEach(o => o.draw(viewMatrix, projMatrix));
         //console.log(this.player.collision(this.player, this.enemy));
 
@@ -49,12 +47,14 @@ class World {
     update() {
         this.player.update();
 
+        //this.enemies.forEach(o => o.attackPlayer(this.player));
+
         this.player.outOfBounds();
 
         if (performance.now() - this.timer >= 3000) {
             this.timer = performance.now();
 
-            this.spawnNewEnemy();
+            //this.spawnNewEnemy();
         }
     }
 
@@ -190,13 +190,13 @@ class World {
                         window.location.reload();
                     }
                     if(world.enemies[i].hp <= 0){
-                        world.enemies.splice(j,Math.min(j+1,world.enemies.length));
+                        world.enemies.splice(i,Math.min(i+1,world.enemies.length));
                     }
                 
             }
         }
     }
-    
+
     buildMap() {
         for (let i = 45; i >= -45; i = i - 15) {
             for (let j = 45; j >= -45; j = j - 15) {
@@ -260,5 +260,9 @@ class World {
         for (let i = 0; i < 20; i++) {
             this.roads.push(new Road(1, [-4 - i * 2.5, -14.5], angle, leftPoint));
         }
+
+        //this.obstacles[0] = new Obstacle(1,[5, 0, 0]);
+        //this.obstacles[1] = new Obstacle(1,[-5, 0, 0]);
+        //this.obstacles.push(new Obstacle(2, [10, 0, 0]));
     }
 }
