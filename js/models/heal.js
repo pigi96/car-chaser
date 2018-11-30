@@ -2,7 +2,7 @@ class Heal extends Model{
     constructor(pos){
      super();
         this.createBuffers(hammerMeshes);
-        this.createTextures(car10Img);
+        this.createTextures(hammerImg);
         this.position[0] = pos[0];
         this.position[1] = pos[1];
         this.width = 1;
@@ -11,8 +11,8 @@ class Heal extends Model{
         mat4.multiply(this.posMatrix, this.posMatrix, matrix);
     }
           rotateObject() {
-        let angle = 2 / 4 * Math.PI;
+        let angle = 0 / 4 * Math.PI;
         mat4.rotate(this.rotatedMatrix, this.posMatrix, angle, [0, 0, 1]);
         this.rotateModelCorrectlyCauseWeDontKnowHowToUseBlender();
-    }
+        }
 }

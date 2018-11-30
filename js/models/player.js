@@ -82,10 +82,10 @@ class Player extends Model {
                 this.position[1] = this.posMatrix[13];
                 switch (rotation) {
                     case "left":
-                        this.pointingTo = this.rotateVector(this.pointingTo, 3);
+                        this.pointingTo = this.rotateVector(this.pointingTo, -2.5);
                         break;
                     case "right":
-                        this.pointingTo = this.rotateVector(this.pointingTo, -3);
+                        this.pointingTo = this.rotateVector(this.pointingTo, 2.5);
                         break;
                     case "stop":
                         // Do nothing

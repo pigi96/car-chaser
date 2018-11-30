@@ -7,6 +7,7 @@ class World {
 		this.heals = [];
         this.crates = [];
 		this.enemy.position = [0, 0];
+		this.roads = [];
 
         //this.enemies[0] = new Enemy([5, -5, 0]);
         //this.enemies.push(new Enemy([-5, 5, 0]));
@@ -17,11 +18,9 @@ class World {
         this.timerForCrates = performance.now();
         this.timerForScore = performance.now();
         this.spawnEnemiesAt = 3000;
-        this.spawnHealsAt = 80000;
+        this.spawnHealsAt = 8000;
         this.spawnCratesAt = 7000;
         this.updateScoreAt = 1000;
-
-        this.roads = [];
 
         this.buildMap();
 	}
@@ -32,7 +31,7 @@ class World {
 
     draw(viewMatrix, projMatrix) {
 	    this.update();
-    
+
 	    this.player.draw(viewMatrix, projMatrix);
 	    //console.log(this.player.position);
 
@@ -69,7 +68,7 @@ class World {
         if (performance.now() - this.timerForEnemies >= this.spawnEnemiesAt) {
             this.timerForEnemies = performance.now();
 
-            this.spawnNewEnemy();
+            //this.spawnNewEnemy();
         }
         if (performance.now() - this.timerForHeals >= this.spawnHealsAt) {
             this.timerForHeals = performance.now();
@@ -186,8 +185,8 @@ class World {
     
     HandlePlayerFatalCollisions(){
         //console.log("Checking for player fatal collisions");
-        for(let i=0;i< world.obstacles.length;i++){
-            if(world.player.collision(world.player,world.obstacles[i])){
+        for (let i = 0; i < world.obstacles.length; i++){
+            if(world.player.collision(world.player, world.obstacles[i])){
                 return false;
             }
         }
@@ -209,13 +208,14 @@ class World {
     HandleNonFatalCollisions(){
         //console.log("Handling nonfatal collisions");
         for (let i = 0; i < world.enemies.length; i++) {
-            for(let j = i+1;j < world.enemies.length; j++) {
+            for(let j = i+1; j < world.enemies.length; j++) {
                 if(world.enemies[i].collision(world.enemies[i], world.enemies[j])){
                     world.enemies[i].hp -=2;
                     world.enemies[j].hp -=2;
                     console.log("enemy hp: "+world.enemies[i].hp);
                     if(world.enemies[i].hp <= 0){
                         world.enemies.splice(i, 1);
+                        j--;
                     }
                     if(world.enemies[j].hp <= 0){
                         world.enemies.splice(j, 1);
@@ -301,9 +301,41 @@ class World {
             this.roads.push(new Road(1, [-4 - i * 2.5, -14.5], angle, leftPoint));
         }
 
-        //this.obstacles[0] = new Obstacle(1,[5, 0, 0]);
-        //this.obstacles[1] = new Obstacle(1,[-5, 0, 0]);
-        //this.obstacles.push(new Obstacle(2, [10, 0, 0]));
+        this.obstacles.push(new Obstacle(1,[15, 0, 0]));
+
+        this.obstacles.push(new Obstacle(1,[8, 7, 0]));
+        this.obstacles.push(new Obstacle(1,[22, 7, 0]));
+
+        this.obstacles.push(new Obstacle(1,[15, 14, 0]));
+        this.obstacles.push(new Obstacle(1,[22, 14, 0]));
+
+        this.obstacles.push(new Obstacle(1,[8, -7, 0]));
+        this.obstacles.push(new Obstacle(1,[22, -7, 0]));
+
+        this.obstacles.push(new Obstacle(1,[-20, 15, 0]));
+        this.obstacles.push(new Obstacle(1,[-16, 5, 0]));
+        this.obstacles.push(new Obstacle(1,[-10, -10, 0]));
+        this.obstacles.push(new Obstacle(1,[-15, 0, 0]));
+
+        this.obstacles.push(new Obstacle(1,[-30, -10, 0]));
+        this.obstacles.push(new Obstacle(1,[-13, -30, 0]));
+
+        this.obstacles.push(new Obstacle(1,[-40, -45, 0]));
+        this.obstacles.push(new Obstacle(1,[-25, -35, 0]));
+
+        this.obstacles.push(new Obstacle(1,[30, -40, 0]));
+        this.obstacles.push(new Obstacle(1,[40, -30, 0]));
+        this.obstacles.push(new Obstacle(1,[20, -25, 0]));
+        this.obstacles.push(new Obstacle(1,[12, -35, 0]));
+
+        this.obstacles.push(new Obstacle(1,[40, 40, 0]));
+        this.obstacles.push(new Obstacle(1,[15, 38, 0]));
+        this.obstacles.push(new Obstacle(1,[-16, 42, 0]));
+        this.obstacles.push(new Obstacle(1,[-25, 35, 0]));
+
+        this.obstacles.push(new Obstacle(1,[40, 0, 0]));
+
+        this.obstacles.push(new Obstacle(1, [-43, 10, 0]));
     }
 
     resetGame() {

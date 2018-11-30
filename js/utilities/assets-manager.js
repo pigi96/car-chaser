@@ -7,8 +7,15 @@ let car0Meshes, car1Meshes, car2Meshes, car3Meshes;
 let hammerMeshes,crateMeshes;
 let crateImg;
 let containerMeshes, containerImg;
+let hammerImg;
+let cabinMeshes, blacksmithMeshes;
+let cabinBlackImg, cabinBrownImg, blacksmithBlackImg, blacksmithBrownImg;
 
-let vsText, fsText, carObj, car1, car2, car4, car6, car8, car10, car11, grassObj, grass, house1Obj, house1, roadForwardObj, roadForward, road90Obj, road90, roadCrossObj, roadCross,hammer,crate,crateTex,containerObj, containerTex;
+let vsText, fsText, carObj, car1, car2, car4, car6, car8;
+let car10, car11, grassObj, grass, house1Obj, house1, roadForwardObj;
+let roadForward, road90Obj, road90, roadCrossObj, roadCross, hammer;
+let crate,crateTex,containerObj, containerTex, hammerTex;
+let cabinObj, cabinBlackTex, cabinBrownTex, blacksmithObj, blacksmithBrownTex, blacksmithBlackTex;
 function loadAssets() {
     loadTextResource("../../shaders/shader.vs.glsl").then(function (url) {
         vsText = url;
@@ -83,8 +90,29 @@ function loadAssets() {
     }).then(function (url) {
         containerObj = url;
         return loadImage("../../assets/container.jpg");
-    }).then(function(url) {
+    }).then(function (url) {
         containerTex = url;
+        return loadImage("../../assets/hammerTex.jpg");
+    }).then(function(url) {
+        hammerTex = url;
+        return loadJSONResource("../../assets/cabin.json");
+    }).then(function (url) {
+        cabinObj = url;
+        return loadImage("../../assets/cabinBrown.jpg");
+    }).then(function (url) {
+        cabinBrownTex = url;
+        return loadImage("../../assets/cabinBlack.jpg");
+    }).then(function(url) {
+        cabinBlackTex = url;
+        return loadJSONResource("../../assets/blacksmith.json");
+    }).then(function (url) {
+        blacksmithObj = url;
+        return loadImage("../../assets/blacksmithBrown.jpg");
+    }).then(function (url) {
+        blacksmithBrownTex = url;
+        return loadImage("../../assets/blacksmithBlack.jpg");
+    }).then(function (url) {
+        blacksmithBlackTex = url;
         init();
     })
 }
@@ -96,9 +124,11 @@ function init() {
     resize(roadForwardObj.meshes, 6);
     resize(roadCrossObj.meshes, 15);
     resize(road90Obj.meshes, 16);
-    resize(hammer.meshes, 1);
+    resize(hammer.meshes, 2);
     resize(crate.meshes, 1);
     resize(containerObj.meshes, 5);
+    resize(cabinObj.meshes, 5.5);
+    resize(blacksmithObj.meshes, 5);
     load();
 }
 
@@ -133,6 +163,16 @@ function setAssets() {
 
     containerMeshes = createBuffers(containerObj, 0);
     containerImg = createTextures(containerTex);
+
+    hammerImg = createTextures(hammerTex);
+
+    cabinMeshes = createBuffers(cabinObj, 0);
+    cabinBrownImg = createTextures(cabinBrownTex);
+    cabinBlackImg = createTextures(cabinBlackTex);
+
+    blacksmithMeshes = createBuffers(blacksmithObj, 0);
+    blacksmithBrownImg = createTextures(blacksmithBrownTex);
+    blacksmithBlackImg = createTextures(blacksmithBlackTex);
 }
 
 function resize(mashes, rng){
