@@ -13,10 +13,10 @@ class Player extends Model {
         this.turnSpeed = 0.003;
         this.look = "up";
         this.angle = 0;
-        this.pointingTo = [0.0, -this.speed, 0.0];
+        this.pointingTo = [-this.speed, this.speed, 0.0];
         this.score = 0;
-        this.width = 1;
-        this.height = 1;
+        this.width = 1.5;
+        this.height = 1.5;
 	}
 
     rotateModelCorrectlyCauseWeDontKnowHowToUseBlender() {

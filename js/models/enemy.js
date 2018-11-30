@@ -30,8 +30,8 @@ class Enemy extends Model {
         let matrix = mat4.fromTranslation(mat4.create(), pos);
         mat4.multiply(this.posMatrix, this.posMatrix, matrix);
 
-        this.width = 1;
-        this.height = 1;
+        this.width = 1.5;
+        this.height = 1.5;
 	}
 	
 
