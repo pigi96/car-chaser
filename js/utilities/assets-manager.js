@@ -4,8 +4,10 @@ let grassImg, roadForwardImg, road90Img, roadCrossImg, house1Img;
 let car1Img, car2Img, car4Img, car6Img, car8Img, car10Img, car11Img;
 let grassMeshes, roadForwardMeshes, road90Meshes, roadCrossMeshes, house1Meshes;
 let car0Meshes, car1Meshes, car2Meshes, car3Meshes;
+let hammerMeshes,crateMeshes;
+let crateImg;
 
-let vsText, fsText, carObj, car1, car2, car4, car6, car8, car10, car11, grassObj, grass, house1Obj, house1, roadForwardObj, roadForward, road90Obj, road90, roadCrossObj, roadCross;
+let vsText, fsText, carObj, car1, car2, car4, car6, car8, car10, car11, grassObj, grass, house1Obj, house1, roadForwardObj, roadForward, road90Obj, road90, roadCrossObj, roadCross,hammer,crate,crateTex;
 function loadAssets() {
     loadTextResource("../../shaders/shader.vs.glsl").then(function (url) {
         vsText = url;
@@ -64,8 +66,17 @@ function loadAssets() {
     }).then(function (url) {
         roadCrossObj = url;
         return loadImage("../../assets/roadCrossTexture.jpg");
-    }).then(function(url) {
+    }).then(function (url) {
         roadCross = url;
+        return loadJSONResource("../../assets/hammer.json");
+    }).then(function (url) {
+         hammer = url;
+        return loadJSONResource("../../assets/crate1.json");
+    }).then(function (url) {
+        crate = url;
+        return loadImage("../../assets/crateTex.png");
+    }).then(function(url) {
+        crateTex = url;
         init();
     })
 }
@@ -77,6 +88,8 @@ function init() {
     resize(roadForwardObj.meshes, 6);
     resize(roadCrossObj.meshes, 15);
     resize(road90Obj.meshes, 16);
+    resize(hammer.meshes, 1);
+    resize(crate.meshes, 1);
     load();
 }
 
@@ -89,7 +102,7 @@ function setAssets() {
     road90Meshes = createBuffers(road90Obj, 0);
     roadCrossImg = createTextures(roadCross);
     roadCrossMeshes = createBuffers(roadCrossObj, 0);
-
+    
     car0Meshes = createBuffers(carObj, 0);
     car1Meshes = createBuffers(carObj, 1);
     car2Meshes = createBuffers(carObj, 2);
@@ -104,6 +117,11 @@ function setAssets() {
 
     house1Img = createTextures(house1);
     house1Meshes = createBuffers(house1Obj, 0);
+
+    hammerMeshes = createBuffers(hammer,0);
+    crateMeshes = createBuffers(crate,0);
+    crateImg = createTextures(crateTex);
+    
 }
 
 function resize(mashes, rng){

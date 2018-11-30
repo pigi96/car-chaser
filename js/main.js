@@ -11,6 +11,11 @@ function load() {
     
 	input = new Input();
 	setInterval(world.HandleNonFatalCollisions,500);
+	setInterval(world.spawnHeals,10000);
+	setInterval(world.HandleHealCollisions,250);
+	setInterval(world.spawnCrates,8000);
+	setInterval(world.HandleCrateCollisions,250);
+	setInterval(world.updateScore,1000);
 	
 	requestAnimationFrame(update);
 }

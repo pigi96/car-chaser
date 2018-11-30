@@ -40,8 +40,8 @@ function loadJSONResource(url) {
         })
     })
 }
-
-/*var loadJSONResource = function(url, callback) {
+/*
+var loadJSONResource = function(url, callback) {
 	loadTextResource(url, function(err, result) {
 		if (err) {
 			callback(err);

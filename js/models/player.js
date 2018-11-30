@@ -14,7 +14,7 @@ class Player extends Model {
         this.look = "up";
         this.angle = 0;
         this.pointingTo = [this.speed, 0.0, 0.0];
-
+        this.score = 0;
         this.width = 2;
         this.height = 2;
 	}
