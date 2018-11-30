@@ -4,6 +4,8 @@ class World {
 		this.enemies = [];
 		this.player = new Player();
 		this.enemy = [];
+		this.heals = [];
+        this.crates = [];
 		this.enemy.position = [0, 0];
         this.obstacles[0] = new Obstacle([5, 0, 0]);
         this.obstacles[1] = new Obstacle([-5, 0, 0]);
@@ -38,6 +40,10 @@ class World {
         this.ground.forEach(o => o.draw(viewMatrix, projMatrix));
 
         this.roads.forEach(o => o.draw(viewMatrix, projMatrix));
+        
+        this.heals.forEach(h => h.draw(viewMatrix, projMatrix));
+        
+        this.crates.forEach(c => c.draw(viewMatrix, projMatrix));
     }
 
     update() {
@@ -80,10 +86,63 @@ class World {
         this.enemies.push(new Enemy([x_ran, y_ran, 0]));
     }
     
-   /* CheckForCollisions(){
-          console.log("Checking for collisions");
-          world.obstacles.forEach()
-    }*/
+    HandleHealCollisions(){
+        //console.log("Handling heal collisions");
+         for(let i=0;i< world.heals.length;i++){
+            if(world.heals[i].collision(world.heals[i],world.player)){
+                if(world.player.hp < 100){
+                    console.log("lets regen!");
+                    world.player.hp = Math.min(world.player.hp+20,100);
+                    world.heals.splice(i,Math.min(i+1,world.heals.length));
+                }
+            }
+        }
+    }
+    
+    HandleCrateCollisions(){
+         //console.log("Handling Crate collisions");
+         for(let i=0;i< world.crates.length;i++){
+            if(world.crates[i].collision(world.crates[i],world.player)){
+                    console.log("ay money!");
+                    world.player.score += Math.round(Math.random()*10)*10+10;
+                    world.crates.splice(i,Math.min(i+1,world.crates.length));
+            }
+        }
+    }
+    
+    spawnHeals(){
+        if(world.heals.length <5){
+            console.log("spawning new heal");
+            let oneX = 1 ;
+            let oneY = 1 ;
+            if(Math.random()< 0.5){
+                oneX = -1;
+            }
+            if(Math.random()< 0.5){
+                oneY = -1;
+            }
+            world.heals[world.heals.length] = new Heal([Math.round(Math.random()*30*oneX),Math.round(Math.random()*30*oneY), 0]);
+       }
+    }
+    
+    spawnCrates(){
+        if(world.crates.length <5){
+            console.log("spawning new crate");
+            let oneX = 1 ;
+            let oneY = 1 ;
+            if(Math.random()< 0.5){
+                oneX = -1;
+            }
+            if(Math.random()< 0.5){
+                oneY = -1;
+            }
+            world.crates[world.crates.length] = new Crate([Math.round(Math.random()*30*oneX),Math.round(Math.random()*30*oneY), 0]);
+       }
+    }
+    
+    updateScore(){
+        world.player.score += 1;
+    }
     
     
     HandlePlayerFatalCollisions(){
